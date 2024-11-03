@@ -1,0 +1,3 @@
+[submodule "raw-samples"]
+	path = raw-samples
+	url = https://github.com/f-spot/raw-samples.git
