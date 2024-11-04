@@ -184,10 +184,10 @@ impl From<i16> for FocalType {
 }
 
 impl LensInfo {
-    pub fn lens_make(&self) -> String {
+    pub fn lens_make(&self) -> Option<String> {
         string_from((self.inner).LensMake.as_ptr())
     }
-    pub fn lens(&self) -> String {
+    pub fn lens(&self) -> Option<String> {
         string_from((self.inner).makernotes.Lens.as_ptr())
     }
     pub fn exif_max_ap(&self) -> f32 {
@@ -211,16 +211,16 @@ impl LensInfo {
     pub fn camera_mount(&self) -> CameraMount {
         CameraMount::from((self.inner).makernotes.CameraMount as u32)
     }
-    pub fn body(&self) -> String {
+    pub fn body(&self) -> Option<String> {
         string_from((self.inner).makernotes.body.as_ptr())
     }
     pub fn focal_type(&self) -> FocalType {
         FocalType::from((self.inner).makernotes.FocalType)
     }
-    pub fn lens_features_pre(&self) -> String {
+    pub fn lens_features_pre(&self) -> Option<String> {
         string_from((self.inner).makernotes.LensFeatures_pre.as_ptr())
     }
-    pub fn lens_features_suf(&self) -> String {
+    pub fn lens_features_suf(&self) -> Option<String> {
         string_from((self.inner).makernotes.LensFeatures_suf.as_ptr())
     }
     pub fn min_focal(&self) -> Option<f32> {
@@ -271,13 +271,13 @@ impl LensInfo {
     pub fn attachment_id(&self) -> Option<u64> {
         non_zero((self.inner).makernotes.AttachmentID)
     }
-    pub fn teleconverter(&self) -> String {
+    pub fn teleconverter(&self) -> Option<String> {
         string_from((self.inner).makernotes.Teleconverter.as_ptr())
     }
-    pub fn adapter(&self) -> String {
+    pub fn adapter(&self) -> Option<String> {
         string_from((self.inner).makernotes.Adapter.as_ptr())
     }
-    pub fn attachment(&self) -> String {
+    pub fn attachment(&self) -> Option<String> {
         string_from((self.inner).makernotes.Attachment.as_ptr())
     }
     pub fn focal_units(&self) -> u16 {

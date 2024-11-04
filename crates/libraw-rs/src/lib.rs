@@ -192,10 +192,10 @@ mod tests {
         let buf = include_bytes!("../../../raw-samples/NEF/RAW_NIKON_D90.NEF");
         let libraw = LibRaw::open_buffer(buf).unwrap();
         let iparams = libraw.idata();
-        assert_eq!(iparams.make(), "Nikon");
-        assert_eq!(iparams.model(), "D90");
-        assert_eq!(iparams.normalized_make(), "Nikon");
-        assert_eq!(iparams.normalized_model(), "D90");
+        assert_eq!(iparams.make(), Some("Nikon".to_string()));
+        assert_eq!(iparams.model(), Some("D90".to_string()));
+        assert_eq!(iparams.normalized_make(), Some("Nikon".to_string()));
+        assert_eq!(iparams.normalized_model(), Some("D90".to_string()));
         assert_eq!(iparams.is_foveon(), false);
 
         let lensinfo = libraw.lens();

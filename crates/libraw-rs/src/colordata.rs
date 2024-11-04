@@ -61,22 +61,22 @@ impl ColorData {
     pub fn canon_ev(&self) -> f32 {
         self.inner.canon_ev
     }
-    pub fn model2(&self) -> String {
+    pub fn model2(&self) -> Option<String> {
         string_from(self.inner.model2.as_ptr())
     }
-    pub fn unique_camera_model(&self) -> String {
+    pub fn unique_camera_model(&self) -> Option<String> {
         string_from(self.inner.UniqueCameraModel.as_ptr())
     }
-    pub fn localized_camera_model(&self) -> String {
+    pub fn localized_camera_model(&self) -> Option<String> {
         string_from(self.inner.LocalizedCameraModel.as_ptr())
     }
-    pub fn image_unique_id(&self) -> String {
+    pub fn image_unique_id(&self) -> Option<String> {
         string_from(self.inner.ImageUniqueID.as_ptr())
     }
-    pub fn raw_data_unique_id(&self) -> String {
+    pub fn raw_data_unique_id(&self) -> Option<String> {
         string_from(self.inner.RawDataUniqueID.as_ptr())
     }
-    pub fn original_raw_file_name(&self) -> String {
+    pub fn original_raw_file_name(&self) -> Option<String> {
         string_from(self.inner.OriginalRawFileName.as_ptr())
     }
     pub fn profile(&self) -> *mut std::ffi::c_void {

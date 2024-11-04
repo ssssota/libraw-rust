@@ -6,22 +6,22 @@ pub struct IParams {
 }
 
 impl IParams {
-    pub fn make(&self) -> String {
+    pub fn make(&self) -> Option<String> {
         string_from((self.inner).make.as_ptr())
     }
-    pub fn model(&self) -> String {
+    pub fn model(&self) -> Option<String> {
         string_from((self.inner).model.as_ptr())
     }
-    pub fn normalized_make(&self) -> String {
+    pub fn normalized_make(&self) -> Option<String> {
         string_from((self.inner).normalized_make.as_ptr())
     }
-    pub fn normalized_model(&self) -> String {
+    pub fn normalized_model(&self) -> Option<String> {
         string_from((self.inner).normalized_model.as_ptr())
     }
     pub fn maker_index(&self) -> u32 {
         (self.inner).maker_index
     }
-    pub fn software(&self) -> String {
+    pub fn software(&self) -> Option<String> {
         string_from((self.inner).software.as_ptr())
     }
     pub fn raw_count(&self) -> u32 {
