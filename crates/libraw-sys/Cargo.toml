@@ -1,0 +1,15 @@
+[package]
+name = "libraw-sys"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[lib]
+name = "libraw_sys"
+
+[dependencies]
+libc = "0.2"
+
+[build-dependencies]
+cc = { version = "1.1.34", features = ["parallel"] }
+bindgen = { version = "0.70", default-features = false, features = ["runtime"], optional = true }

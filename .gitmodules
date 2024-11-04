@@ -1,3 +1,6 @@
 [submodule "raw-samples"]
 	path = raw-samples
 	url = https://github.com/f-spot/raw-samples.git
+[submodule "crates/libraw-sys/LibRaw"]
+	path = crates/libraw-sys/LibRaw
+	url = https://github.com/LibRaw/LibRaw
