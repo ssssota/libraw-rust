@@ -16,4 +16,3 @@ jobs:
           submodules: recursive
       - uses: ./.github/actions/setup
       - run: cargo test
-        working-directory: ./crates/libraw-rs

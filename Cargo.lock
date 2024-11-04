@@ -122,16 +122,7 @@ dependencies = [
 name = "libraw-rs"
 version = "0.1.0"
 dependencies = [
- "libraw-rs-sys",
-]
-
-[[package]]
-name = "libraw-rs-sys"
-version = "0.0.4+libraw-0.21.3"
-source = "git+https://github.com/paolobarbolini/libraw-rs.git?rev=9e28687ce279c34f82622d98bd673e8ea8964d89#9e28687ce279c34f82622d98bd673e8ea8964d89"
-dependencies = [
- "cc",
- "libc",
+ "libraw-sys",
 ]
 
 [[package]]

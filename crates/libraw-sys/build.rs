@@ -6,7 +6,6 @@ fn main() {
     let out_dir = Path::new(&out_dir);
 
     build(out_dir);
-    #[cfg(feature = "bindgen")]
     bindings(out_dir);
 }
 
@@ -113,7 +112,6 @@ fn build(out_dir: &Path) {
     println!("cargo:rustc-link-lib=static=raw");
 }
 
-#[cfg(feature = "bindgen")]
 fn bindings(out_dir: &Path) {
     let bindings = bindgen::Builder::default()
         .header("LibRaw/libraw/libraw.h")
