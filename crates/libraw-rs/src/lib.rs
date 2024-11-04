@@ -189,7 +189,7 @@ mod tests {
 
     #[test]
     fn nikon_d90() {
-        let buf = include_bytes!("../raw-samples/NEF/RAW_NIKON_D90.NEF");
+        let buf = include_bytes!("../../../raw-samples/NEF/RAW_NIKON_D90.NEF");
         let libraw = LibRaw::open_buffer(buf).unwrap();
         let iparams = libraw.idata();
         assert_eq!(iparams.make(), "Nikon");
