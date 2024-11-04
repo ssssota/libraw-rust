@@ -1,0 +1,23 @@
+name: Setup environment
+description: Setup environment for the project
+
+inputs:
+  node-version:
+    description: Node.js version
+    default: lts/*
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+        targets: wasm32-unknown-unknown
+        compnents: rustfmt, clippy
+    - run: corepack enable
+      shell: bash
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'pnpm'
+    - run: corepack enable && pnpm install
+      shell: bash
