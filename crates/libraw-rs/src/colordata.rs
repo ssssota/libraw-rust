@@ -3,113 +3,81 @@ use libraw_sys::*;
 use crate::utils::string_from;
 
 pub struct ColorData {
-    pub(crate) inner: libraw_colordata_t,
+    pub curve: [u16; 65536],
+    pub cblack: [u32; 4104],
+    pub black: u32,
+    pub data_maximum: u32,
+    pub maximum: u32,
+    pub linear_max: [i64; 4],
+    pub fmaximum: f32,
+    pub fnorm: f32,
+    pub white: [[u16; 8]; 8],
+    pub cam_mul: [f32; 4],
+    pub pre_mul: [f32; 4],
+    pub cmatrix: [[f32; 4]; 3],
+    pub ccm: [[f32; 4]; 3],
+    pub rgb_cam: [[f32; 4]; 3],
+    pub cam_xyz: [[f32; 3]; 4],
+    pub phase_one_data: ph1_t,
+    pub flash_used: f32,
+    pub canon_ev: f32,
+    pub model2: Option<String>,
+    pub unique_camera_model: Option<String>,
+    pub localized_camera_model: Option<String>,
+    pub image_unique_id: Option<String>,
+    pub raw_data_unique_id: Option<String>,
+    pub original_raw_file_name: Option<String>,
+    pub profile: *mut std::ffi::c_void,
+    pub profile_length: u32,
+    pub black_stat: [u32; 8],
+    pub dng_color: [libraw_dng_color_t; 2],
+    pub dng_levels: libraw_dng_levels_t,
+    pub wb_coeffs: [[i32; 4]; 256],
+    pub wbct_coeffs: [[f32; 5]; 64],
+    pub as_shot_wb_applied: i32,
+    pub p1_color: [libraw_P1_color_t; 2],
+    pub raw_bps: u32,
+    pub exif_color_space: i32,
 }
 
-impl ColorData {
-    pub fn curve(&self) -> [u16; 65536] {
-        self.inner.curve
-    }
-    pub fn cblack(&self) -> [u32; 4104] {
-        self.inner.cblack
-    }
-    pub fn black(&self) -> u32 {
-        self.inner.black
-    }
-    pub fn data_maximum(&self) -> u32 {
-        self.inner.data_maximum
-    }
-    pub fn maximum(&self) -> u32 {
-        self.inner.maximum
-    }
-    pub fn linear_max(&self) -> [i64; 4] {
-        self.inner.linear_max
-    }
-    pub fn fmaximum(&self) -> f32 {
-        self.inner.fmaximum
-    }
-    pub fn fnorm(&self) -> f32 {
-        self.inner.fnorm
-    }
-    pub fn white(&self) -> [[u16; 8]; 8] {
-        self.inner.white
-    }
-    pub fn cam_mul(&self) -> [f32; 4] {
-        self.inner.cam_mul
-    }
-    pub fn pre_mul(&self) -> [f32; 4] {
-        self.inner.pre_mul
-    }
-    pub fn cmatrix(&self) -> [[f32; 4]; 3] {
-        self.inner.cmatrix
-    }
-    pub fn ccm(&self) -> [[f32; 4]; 3] {
-        self.inner.ccm
-    }
-    pub fn rgb_cam(&self) -> [[f32; 4]; 3] {
-        self.inner.rgb_cam
-    }
-    pub fn cam_xyz(&self) -> [[f32; 3]; 4] {
-        self.inner.cam_xyz
-    }
-    pub fn phase_one_data(&self) -> ph1_t {
-        self.inner.phase_one_data
-    }
-    pub fn flash_used(&self) -> f32 {
-        self.inner.flash_used
-    }
-    pub fn canon_ev(&self) -> f32 {
-        self.inner.canon_ev
-    }
-    pub fn model2(&self) -> Option<String> {
-        string_from(self.inner.model2.as_ptr())
-    }
-    pub fn unique_camera_model(&self) -> Option<String> {
-        string_from(self.inner.UniqueCameraModel.as_ptr())
-    }
-    pub fn localized_camera_model(&self) -> Option<String> {
-        string_from(self.inner.LocalizedCameraModel.as_ptr())
-    }
-    pub fn image_unique_id(&self) -> Option<String> {
-        string_from(self.inner.ImageUniqueID.as_ptr())
-    }
-    pub fn raw_data_unique_id(&self) -> Option<String> {
-        string_from(self.inner.RawDataUniqueID.as_ptr())
-    }
-    pub fn original_raw_file_name(&self) -> Option<String> {
-        string_from(self.inner.OriginalRawFileName.as_ptr())
-    }
-    pub fn profile(&self) -> *mut std::ffi::c_void {
-        self.inner.profile
-    }
-    pub fn profile_length(&self) -> u32 {
-        self.inner.profile_length
-    }
-    pub fn black_stat(&self) -> [u32; 8] {
-        self.inner.black_stat
-    }
-    pub fn dng_color(&self) -> [libraw_dng_color_t; 2] {
-        self.inner.dng_color
-    }
-    pub fn dng_levels(&self) -> libraw_dng_levels_t {
-        self.inner.dng_levels
-    }
-    pub fn wb_coeffs(&self) -> [[i32; 4]; 256] {
-        self.inner.WB_Coeffs
-    }
-    pub fn wbct_coeffs(&self) -> [[f32; 5]; 64] {
-        self.inner.WBCT_Coeffs
-    }
-    pub fn as_shot_wb_applied(&self) -> i32 {
-        self.inner.as_shot_wb_applied
-    }
-    pub fn p1_color(&self) -> [libraw_P1_color_t; 2] {
-        self.inner.P1_color
-    }
-    pub fn raw_bps(&self) -> u32 {
-        self.inner.raw_bps
-    }
-    pub fn exif_color_space(&self) -> i32 {
-        self.inner.ExifColorSpace
+impl From<libraw_colordata_t> for ColorData {
+    fn from(value: libraw_colordata_t) -> Self {
+        ColorData {
+            curve: value.curve,
+            cblack: value.cblack,
+            black: value.black,
+            data_maximum: value.data_maximum,
+            maximum: value.maximum,
+            linear_max: value.linear_max,
+            fmaximum: value.fmaximum,
+            fnorm: value.fnorm,
+            white: value.white,
+            cam_mul: value.cam_mul,
+            pre_mul: value.pre_mul,
+            cmatrix: value.cmatrix,
+            ccm: value.ccm,
+            rgb_cam: value.rgb_cam,
+            cam_xyz: value.cam_xyz,
+            phase_one_data: value.phase_one_data,
+            flash_used: value.flash_used,
+            canon_ev: value.canon_ev,
+            model2: string_from(value.model2.as_ptr()),
+            unique_camera_model: string_from(value.UniqueCameraModel.as_ptr()),
+            localized_camera_model: string_from(value.LocalizedCameraModel.as_ptr()),
+            image_unique_id: string_from(value.ImageUniqueID.as_ptr()),
+            raw_data_unique_id: string_from(value.RawDataUniqueID.as_ptr()),
+            original_raw_file_name: string_from(value.OriginalRawFileName.as_ptr()),
+            profile: value.profile,
+            profile_length: value.profile_length,
+            black_stat: value.black_stat,
+            dng_color: value.dng_color,
+            dng_levels: value.dng_levels,
+            wb_coeffs: value.WB_Coeffs,
+            wbct_coeffs: value.WBCT_Coeffs,
+            as_shot_wb_applied: value.as_shot_wb_applied,
+            p1_color: value.P1_color,
+            raw_bps: value.raw_bps,
+            exif_color_space: value.ExifColorSpace,
+        }
     }
 }

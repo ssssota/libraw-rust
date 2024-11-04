@@ -1,5 +1,6 @@
 pub mod colordata;
 pub mod image;
+pub mod imgother;
 pub mod iparams;
 pub mod lensinfo;
 pub mod makernotes;
@@ -9,6 +10,7 @@ pub mod utils;
 
 use colordata::ColorData;
 use image::ProcessedImage;
+use imgother::ImgOther;
 use iparams::IParams;
 use lensinfo::LensInfo;
 use libraw_sys::*;
@@ -113,9 +115,7 @@ impl LibRaw {
     }
 
     pub fn idata(&self) -> IParams {
-        IParams {
-            inner: unsafe { (*self.inner).idata },
-        }
+        IParams::from(unsafe { (*self.inner).idata })
     }
 
     pub fn sizes(&self) -> Sizes {
@@ -125,25 +125,19 @@ impl LibRaw {
     }
 
     pub fn lens(&self) -> LensInfo {
-        LensInfo {
-            inner: unsafe { (*self.inner).lens },
-        }
+        LensInfo::from(unsafe { (*self.inner).lens })
     }
 
     pub fn makernotes(&self) -> Makernotes {
-        Makernotes {
-            inner: unsafe { (*self.inner).makernotes },
-        }
+        Makernotes::from(unsafe { (*self.inner).makernotes })
     }
 
     pub fn color(&self) -> ColorData {
-        ColorData {
-            inner: unsafe { (*self.inner).color },
-        }
+        ColorData::from(unsafe { (*self.inner).color })
     }
 
-    pub fn other(&self) -> libraw_imgother_t {
-        unsafe { (*self.inner).other }
+    pub fn other(&self) -> ImgOther {
+        ImgOther::from(unsafe { (*self.inner).other })
     }
 
     pub fn thumbnail(&self) -> libraw_thumbnail_t {
@@ -192,13 +186,13 @@ mod tests {
         let buf = include_bytes!("../../../raw-samples/NEF/RAW_NIKON_D90.NEF");
         let libraw = LibRaw::open_buffer(buf).unwrap();
         let iparams = libraw.idata();
-        assert_eq!(iparams.make(), Some("Nikon".to_string()));
-        assert_eq!(iparams.model(), Some("D90".to_string()));
-        assert_eq!(iparams.normalized_make(), Some("Nikon".to_string()));
-        assert_eq!(iparams.normalized_model(), Some("D90".to_string()));
-        assert_eq!(iparams.is_foveon(), false);
+        assert_eq!(iparams.make, Some("Nikon".to_string()));
+        assert_eq!(iparams.model, Some("D90".to_string()));
+        assert_eq!(iparams.normalized_make, Some("Nikon".to_string()));
+        assert_eq!(iparams.normalized_model, Some("D90".to_string()));
+        assert_eq!(iparams.is_foveon, false);
 
         let lensinfo = libraw.lens();
-        assert_eq!(lensinfo.exif_max_ap(), 1.4142135);
+        assert_eq!(lensinfo.exif_max_ap, 1.4142135);
     }
 }

@@ -1,8 +1,83 @@
 use crate::utils::{non_zero, string_from};
 use libraw_sys as sys;
 
+#[derive(Debug)]
 pub struct LensInfo {
-    pub(crate) inner: sys::libraw_lensinfo_t,
+    pub lens_make: Option<String>,
+    pub lens: Option<String>,
+    pub exif_max_ap: f32,
+    pub lens_id: u64,
+    pub cam_id: u64,
+    pub lens_format: CameraFormat,
+    pub camera_format: CameraFormat,
+    pub lens_mount: CameraMount,
+    pub camera_mount: CameraMount,
+    pub body: Option<String>,
+    pub focal_type: FocalType,
+    pub lens_features_pre: Option<String>,
+    pub lens_features_suf: Option<String>,
+    pub min_focal: Option<f32>,
+    pub max_focal: Option<f32>,
+    pub max_ap4_min_focal: Option<f32>,
+    pub max_ap4_max_focal: Option<f32>,
+    pub min_ap4_min_focal: Option<f32>,
+    pub min_ap4_max_focal: Option<f32>,
+    pub max_ap: Option<f32>,
+    pub min_ap: Option<f32>,
+    pub cur_focal: Option<f32>,
+    pub cur_ap: Option<f32>,
+    pub max_ap4_cur_focal: Option<f32>,
+    pub min_ap4_cur_focal: Option<f32>,
+    pub lens_f_stop: Option<f32>,
+    pub teleconverter_id: Option<u64>,
+    pub adapter_id: Option<u64>,
+    pub attachment_id: Option<u64>,
+    pub teleconverter: Option<String>,
+    pub adapter: Option<String>,
+    pub attachment: Option<String>,
+    pub focal_units: u16,
+    pub focal_length_in_35mm_format: Option<f32>,
+}
+
+impl From<sys::libraw_lensinfo_t> for LensInfo {
+    fn from(value: sys::libraw_lensinfo_t) -> Self {
+        LensInfo {
+            lens_make: string_from(value.LensMake.as_ptr()),
+            lens: string_from(value.makernotes.Lens.as_ptr()),
+            exif_max_ap: value.EXIF_MaxAp,
+            lens_id: value.makernotes.LensID,
+            cam_id: value.makernotes.CamID,
+            lens_format: CameraFormat::from(value.makernotes.LensFormat as u32),
+            camera_format: CameraFormat::from(value.makernotes.CameraFormat as u32),
+            lens_mount: CameraMount::from(value.makernotes.LensMount as u32),
+            camera_mount: CameraMount::from(value.makernotes.CameraMount as u32),
+            body: string_from(value.makernotes.body.as_ptr()),
+            focal_type: FocalType::from(value.makernotes.FocalType),
+            lens_features_pre: string_from(value.makernotes.LensFeatures_pre.as_ptr()),
+            lens_features_suf: string_from(value.makernotes.LensFeatures_suf.as_ptr()),
+            min_focal: non_zero(value.makernotes.MinFocal),
+            max_focal: non_zero(value.makernotes.MaxFocal),
+            max_ap4_min_focal: non_zero(value.makernotes.MaxAp4MinFocal),
+            max_ap4_max_focal: non_zero(value.makernotes.MaxAp4MaxFocal),
+            min_ap4_min_focal: non_zero(value.makernotes.MinAp4MinFocal),
+            min_ap4_max_focal: non_zero(value.makernotes.MinAp4MaxFocal),
+            max_ap: non_zero(value.makernotes.MaxAp),
+            min_ap: non_zero(value.makernotes.MinAp),
+            cur_focal: non_zero(value.makernotes.CurFocal),
+            cur_ap: non_zero(value.makernotes.CurAp),
+            max_ap4_cur_focal: non_zero(value.makernotes.MaxAp4CurFocal),
+            min_ap4_cur_focal: non_zero(value.makernotes.MinAp4CurFocal),
+            lens_f_stop: non_zero(value.makernotes.LensFStops),
+            teleconverter_id: non_zero(value.makernotes.TeleconverterID),
+            adapter_id: non_zero(value.makernotes.AdapterID),
+            attachment_id: non_zero(value.makernotes.AttachmentID),
+            teleconverter: string_from(value.makernotes.Teleconverter.as_ptr()),
+            adapter: string_from(value.makernotes.Adapter.as_ptr()),
+            attachment: string_from(value.makernotes.Attachment.as_ptr()),
+            focal_units: value.makernotes.FocalUnits,
+            focal_length_in_35mm_format: non_zero(value.makernotes.FocalLengthIn35mmFormat),
+        }
+    }
 }
 
 #[derive(Debug, PartialEq)]
@@ -180,110 +255,5 @@ impl From<i16> for FocalType {
             2 => FocalType::Fixed,
             _ => FocalType::Unknown(value),
         }
-    }
-}
-
-impl LensInfo {
-    pub fn lens_make(&self) -> Option<String> {
-        string_from((self.inner).LensMake.as_ptr())
-    }
-    pub fn lens(&self) -> Option<String> {
-        string_from((self.inner).makernotes.Lens.as_ptr())
-    }
-    pub fn exif_max_ap(&self) -> f32 {
-        (self.inner).EXIF_MaxAp
-    }
-    pub fn lens_id(&self) -> u64 {
-        (self.inner).makernotes.LensID
-    }
-    pub fn cam_id(&self) -> u64 {
-        (self.inner).makernotes.CamID
-    }
-    pub fn lens_format(&self) -> CameraFormat {
-        CameraFormat::from((self.inner).makernotes.LensFormat as u32)
-    }
-    pub fn camera_format(&self) -> CameraFormat {
-        CameraFormat::from((self.inner).makernotes.CameraFormat as u32)
-    }
-    pub fn lens_mount(&self) -> CameraMount {
-        CameraMount::from((self.inner).makernotes.LensMount as u32)
-    }
-    pub fn camera_mount(&self) -> CameraMount {
-        CameraMount::from((self.inner).makernotes.CameraMount as u32)
-    }
-    pub fn body(&self) -> Option<String> {
-        string_from((self.inner).makernotes.body.as_ptr())
-    }
-    pub fn focal_type(&self) -> FocalType {
-        FocalType::from((self.inner).makernotes.FocalType)
-    }
-    pub fn lens_features_pre(&self) -> Option<String> {
-        string_from((self.inner).makernotes.LensFeatures_pre.as_ptr())
-    }
-    pub fn lens_features_suf(&self) -> Option<String> {
-        string_from((self.inner).makernotes.LensFeatures_suf.as_ptr())
-    }
-    pub fn min_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MinFocal)
-    }
-    pub fn max_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MaxFocal)
-    }
-    pub fn max_ap4_min_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MaxAp4MinFocal)
-    }
-    pub fn max_ap4_max_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MaxAp4MaxFocal)
-    }
-    pub fn min_ap4_min_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MinAp4MinFocal)
-    }
-    pub fn min_ap4_max_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MinAp4MaxFocal)
-    }
-    pub fn max_ap(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MaxAp)
-    }
-    pub fn min_ap(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MinAp)
-    }
-    pub fn cur_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.CurFocal)
-    }
-    pub fn cur_ap(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.CurAp)
-    }
-    pub fn max_ap4_cur_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MaxAp4CurFocal)
-    }
-    pub fn min_ap4_cur_focal(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.MinAp4CurFocal)
-    }
-    pub fn lens_f_stop(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.LensFStops)
-    }
-    pub fn teleconverter_id(&self) -> Option<u64> {
-        non_zero((self.inner).makernotes.TeleconverterID)
-    }
-    pub fn adapter_id(&self) -> Option<u64> {
-        non_zero((self.inner).makernotes.AdapterID)
-    }
-    pub fn attachment_id(&self) -> Option<u64> {
-        non_zero((self.inner).makernotes.AttachmentID)
-    }
-    pub fn teleconverter(&self) -> Option<String> {
-        string_from((self.inner).makernotes.Teleconverter.as_ptr())
-    }
-    pub fn adapter(&self) -> Option<String> {
-        string_from((self.inner).makernotes.Adapter.as_ptr())
-    }
-    pub fn attachment(&self) -> Option<String> {
-        string_from((self.inner).makernotes.Attachment.as_ptr())
-    }
-    pub fn focal_units(&self) -> u16 {
-        (self.inner).makernotes.FocalUnits
-    }
-    pub fn focal_length_in_35mm_format(&self) -> Option<f32> {
-        non_zero((self.inner).makernotes.FocalLengthIn35mmFormat)
     }
 }
