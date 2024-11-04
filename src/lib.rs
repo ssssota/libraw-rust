@@ -1,14 +1,18 @@
+pub mod colordata;
 pub mod image;
 pub mod iparams;
 pub mod lensinfo;
+pub mod makernotes;
 pub mod result;
 pub mod sizes;
 pub mod utils;
 
+use colordata::ColorData;
 use image::ProcessedImage;
 use iparams::IParams;
 use lensinfo::LensInfo;
 use libraw_sys::*;
+use makernotes::Makernotes;
 use result::{handle_error, Error, Result};
 use sizes::Sizes;
 use std::{
@@ -126,12 +130,16 @@ impl LibRaw {
         }
     }
 
-    pub fn makernotes(&self) -> libraw_makernotes_t {
-        unsafe { (*self.inner).makernotes }
+    pub fn makernotes(&self) -> Makernotes {
+        Makernotes {
+            inner: unsafe { (*self.inner).makernotes },
+        }
     }
 
-    pub fn color(&self) -> libraw_colordata_t {
-        unsafe { (*self.inner).color }
+    pub fn color(&self) -> ColorData {
+        ColorData {
+            inner: unsafe { (*self.inner).color },
+        }
     }
 
     pub fn other(&self) -> libraw_imgother_t {
