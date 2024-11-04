@@ -167,12 +167,12 @@ mod tests {
 
     #[test]
     fn version() {
-        assert_eq!(LibRaw::version(), "0.21.3-Release");
+        assert_eq!(LibRaw::version(), "0.22.0-Devel202403");
     }
 
     #[test]
     fn version_number() {
-        assert_eq!(LibRaw::version_number(), 5379);
+        assert_eq!(LibRaw::version_number(), 5632);
     }
 
     #[test]
