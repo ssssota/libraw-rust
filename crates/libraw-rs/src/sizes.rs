@@ -1,7 +1,9 @@
 use libraw_sys::*;
 
+use crate::impl_property;
+
 pub struct Sizes {
-    pub(crate) inner: libraw_sys::libraw_image_sizes_t,
+    inner: libraw_sys::libraw_image_sizes_t,
 }
 
 pub enum Rotation {
@@ -24,40 +26,21 @@ impl From<i32> for Rotation {
 }
 
 impl Sizes {
-    pub fn raw_width(&self) -> u16 {
-        (self.inner).raw_width
+    pub(crate) fn new(inner: libraw_sys::libraw_image_sizes_t) -> Self {
+        Sizes { inner }
     }
-    pub fn raw_height(&self) -> u16 {
-        (self.inner).raw_height
-    }
-    pub fn width(&self) -> u16 {
-        (self.inner).width
-    }
-    pub fn height(&self) -> u16 {
-        (self.inner).height
-    }
-    pub fn top_margin(&self) -> u16 {
-        (self.inner).top_margin
-    }
-    pub fn left_margin(&self) -> u16 {
-        (self.inner).left_margin
-    }
-    pub fn iwidth(&self) -> u16 {
-        (self.inner).iwidth
-    }
-    pub fn iheight(&self) -> u16 {
-        (self.inner).iheight
-    }
-    pub fn raw_pitch(&self) -> u32 {
-        (self.inner).raw_pitch
-    }
-    pub fn pixel_aspect(&self) -> f64 {
-        (self.inner).pixel_aspect
-    }
+    impl_property!(raw_width, u16);
+    impl_property!(raw_height, u16);
+    impl_property!(width, u16);
+    impl_property!(height, u16);
+    impl_property!(top_margin, u16);
+    impl_property!(left_margin, u16);
+    impl_property!(iwidth, u16);
+    impl_property!(iheight, u16);
+    impl_property!(raw_pitch, u32);
+    impl_property!(pixel_aspect, f64);
+    impl_property!(raw_inset_crops, [libraw_raw_inset_crop_t; 2]);
     pub fn flip(&self) -> Rotation {
         Rotation::from((self.inner).flip)
-    }
-    pub fn raw_inset_crops(&self) -> [libraw_raw_inset_crop_t; 2] {
-        (self.inner).raw_inset_crops
     }
 }

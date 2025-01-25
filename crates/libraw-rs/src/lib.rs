@@ -4,6 +4,7 @@ pub mod imgother;
 pub mod iparams;
 pub mod lensinfo;
 pub mod makernotes;
+pub mod makernotes_lens;
 pub mod result;
 pub mod sizes;
 pub mod utils;
@@ -100,44 +101,42 @@ impl LibRaw {
 
     pub fn dcraw_make_mem_image(&self) -> Result<ProcessedImage> {
         let ptr = std::ptr::null_mut();
-        let image = unsafe { libraw_dcraw_make_mem_image(self.inner, ptr) };
-        let image = ProcessedImage::new(image);
+        let image = unsafe { *libraw_dcraw_make_mem_image(self.inner, ptr) };
         handle_error(ptr as i32)?;
+        let image = ProcessedImage::new(image);
         Ok(image)
     }
 
     pub fn dcraw_make_mem_thumb(&self) -> Result<ProcessedImage> {
         let ptr = std::ptr::null_mut();
-        let image = unsafe { libraw_dcraw_make_mem_thumb(self.inner, ptr) };
-        let image = ProcessedImage::new(image);
+        let image = unsafe { *libraw_dcraw_make_mem_thumb(self.inner, ptr) };
         handle_error(ptr as i32)?;
+        let image = ProcessedImage::new(image);
         Ok(image)
     }
 
     pub fn idata(&self) -> IParams {
-        IParams::from(unsafe { (*self.inner).idata })
+        IParams::new(unsafe { (*self.inner).idata })
     }
 
     pub fn sizes(&self) -> Sizes {
-        Sizes {
-            inner: unsafe { (*self.inner).sizes },
-        }
+        Sizes::new(unsafe { (*self.inner).sizes })
     }
 
     pub fn lens(&self) -> LensInfo {
-        LensInfo::from(unsafe { (*self.inner).lens })
+        LensInfo::new(unsafe { (*self.inner).lens })
     }
 
     pub fn makernotes(&self) -> Makernotes {
-        Makernotes::from(unsafe { (*self.inner).makernotes })
+        Makernotes::new(unsafe { (*self.inner).makernotes })
     }
 
     pub fn color(&self) -> ColorData {
-        ColorData::from(unsafe { (*self.inner).color })
+        ColorData::new(unsafe { (*self.inner).color })
     }
 
     pub fn other(&self) -> ImgOther {
-        ImgOther::from(unsafe { (*self.inner).other })
+        ImgOther::new(unsafe { (*self.inner).other })
     }
 
     pub fn thumbnail(&self) -> libraw_thumbnail_t {
@@ -172,7 +171,7 @@ mod tests {
     #[test]
     fn camera_list() {
         let cameras = LibRaw::camera_list();
-        assert!(!cameras.is_empty());
+        assert_eq!(cameras.len(), 1222);
         // Check for some known cameras
         assert!(cameras.contains(&"Adobe Digital Negative (DNG)".to_string()));
         assert!(cameras.contains(&"Canon EOS R3".to_string()));
@@ -186,13 +185,13 @@ mod tests {
         let buf = include_bytes!("../../../raw-samples/NEF/RAW_NIKON_D90.NEF");
         let libraw = LibRaw::open_buffer(buf).unwrap();
         let iparams = libraw.idata();
-        assert_eq!(iparams.make, Some("Nikon".to_string()));
-        assert_eq!(iparams.model, Some("D90".to_string()));
-        assert_eq!(iparams.normalized_make, Some("Nikon".to_string()));
-        assert_eq!(iparams.normalized_model, Some("D90".to_string()));
-        assert_eq!(iparams.is_foveon, false);
+        assert_eq!(iparams.make(), Some("Nikon".to_string()));
+        assert_eq!(iparams.model(), Some("D90".to_string()));
+        assert_eq!(iparams.normalized_make(), Some("Nikon".to_string()));
+        assert_eq!(iparams.normalized_model(), Some("D90".to_string()));
+        assert_eq!(iparams.is_foveon(), false);
 
         let lensinfo = libraw.lens();
-        assert_eq!(lensinfo.exif_max_ap, 1.4142135);
+        assert_eq!(lensinfo.exif_max_ap(), 1.4142135);
     }
 }

@@ -1,83 +1,48 @@
 use libraw_sys::*;
 
-use crate::utils::string_from;
+use crate::impl_property;
 
 pub struct ColorData {
-    pub curve: [u16; 65536],
-    pub cblack: [u32; 4104],
-    pub black: u32,
-    pub data_maximum: u32,
-    pub maximum: u32,
-    pub linear_max: [i64; 4],
-    pub fmaximum: f32,
-    pub fnorm: f32,
-    pub white: [[u16; 8]; 8],
-    pub cam_mul: [f32; 4],
-    pub pre_mul: [f32; 4],
-    pub cmatrix: [[f32; 4]; 3],
-    pub ccm: [[f32; 4]; 3],
-    pub rgb_cam: [[f32; 4]; 3],
-    pub cam_xyz: [[f32; 3]; 4],
-    pub phase_one_data: ph1_t,
-    pub flash_used: f32,
-    pub canon_ev: f32,
-    pub model2: Option<String>,
-    pub unique_camera_model: Option<String>,
-    pub localized_camera_model: Option<String>,
-    pub image_unique_id: Option<String>,
-    pub raw_data_unique_id: Option<String>,
-    pub original_raw_file_name: Option<String>,
-    pub profile: *mut std::ffi::c_void,
-    pub profile_length: u32,
-    pub black_stat: [u32; 8],
-    pub dng_color: [libraw_dng_color_t; 2],
-    pub dng_levels: libraw_dng_levels_t,
-    pub wb_coeffs: [[i32; 4]; 256],
-    pub wbct_coeffs: [[f32; 5]; 64],
-    pub as_shot_wb_applied: i32,
-    pub p1_color: [libraw_P1_color_t; 2],
-    pub raw_bps: u32,
-    pub exif_color_space: i32,
+    inner: libraw_colordata_t,
 }
 
-impl From<libraw_colordata_t> for ColorData {
-    fn from(value: libraw_colordata_t) -> Self {
-        ColorData {
-            curve: value.curve,
-            cblack: value.cblack,
-            black: value.black,
-            data_maximum: value.data_maximum,
-            maximum: value.maximum,
-            linear_max: value.linear_max,
-            fmaximum: value.fmaximum,
-            fnorm: value.fnorm,
-            white: value.white,
-            cam_mul: value.cam_mul,
-            pre_mul: value.pre_mul,
-            cmatrix: value.cmatrix,
-            ccm: value.ccm,
-            rgb_cam: value.rgb_cam,
-            cam_xyz: value.cam_xyz,
-            phase_one_data: value.phase_one_data,
-            flash_used: value.flash_used,
-            canon_ev: value.canon_ev,
-            model2: string_from(value.model2.as_ptr()),
-            unique_camera_model: string_from(value.UniqueCameraModel.as_ptr()),
-            localized_camera_model: string_from(value.LocalizedCameraModel.as_ptr()),
-            image_unique_id: string_from(value.ImageUniqueID.as_ptr()),
-            raw_data_unique_id: string_from(value.RawDataUniqueID.as_ptr()),
-            original_raw_file_name: string_from(value.OriginalRawFileName.as_ptr()),
-            profile: value.profile,
-            profile_length: value.profile_length,
-            black_stat: value.black_stat,
-            dng_color: value.dng_color,
-            dng_levels: value.dng_levels,
-            wb_coeffs: value.WB_Coeffs,
-            wbct_coeffs: value.WBCT_Coeffs,
-            as_shot_wb_applied: value.as_shot_wb_applied,
-            p1_color: value.P1_color,
-            raw_bps: value.raw_bps,
-            exif_color_space: value.ExifColorSpace,
-        }
+impl ColorData {
+    pub(crate) fn new(inner: libraw_colordata_t) -> Self {
+        ColorData { inner }
     }
+    impl_property!(curve, [u16; 65536]);
+    impl_property!(cblack, [u32; 4104]);
+    impl_property!(black, u32);
+    impl_property!(data_maximum, u32);
+    impl_property!(maximum, u32);
+    impl_property!(linear_max, [i64; 4]);
+    impl_property!(fmaximum, f32);
+    impl_property!(fnorm, f32);
+    impl_property!(white, [[u16; 8]; 8]);
+    impl_property!(cam_mul, [f32; 4]);
+    impl_property!(pre_mul, [f32; 4]);
+    impl_property!(cmatrix, [[f32; 4]; 3]);
+    impl_property!(ccm, [[f32; 4]; 3]);
+    impl_property!(rgb_cam, [[f32; 4]; 3]);
+    impl_property!(cam_xyz, [[f32; 3]; 4]);
+    impl_property!(phase_one_data, ph1_t);
+    impl_property!(flash_used, f32);
+    impl_property!(canon_ev, f32);
+    impl_property!(model2, Option<String>);
+    impl_property!(unique_camera_model, UniqueCameraModel, Option<String>);
+    impl_property!(localized_camera_model, LocalizedCameraModel, Option<String>);
+    impl_property!(image_unique_id, ImageUniqueID, Option<String>);
+    impl_property!(raw_data_unique_id, RawDataUniqueID, Option<String>);
+    impl_property!(original_raw_file_name, OriginalRawFileName, Option<String>);
+    impl_property!(profile, *mut std::ffi::c_void);
+    impl_property!(profile_length, u32);
+    impl_property!(black_stat, [u32; 8]);
+    impl_property!(dng_color, [libraw_dng_color_t; 2]);
+    impl_property!(dng_levels, libraw_dng_levels_t);
+    impl_property!(wb_coeffs, WB_Coeffs, [[i32; 4]; 256]);
+    impl_property!(wbct_coeffs, WBCT_Coeffs, [[f32; 5]; 64]);
+    impl_property!(as_shot_wb_applied, i32);
+    impl_property!(p1_color, P1_color, [libraw_P1_color_t; 2]);
+    impl_property!(raw_bps, u32);
+    impl_property!(exif_color_space, ExifColorSpace, i32);
 }

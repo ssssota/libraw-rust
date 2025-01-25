@@ -13,38 +13,66 @@ pub mod samsung;
 pub mod sony;
 
 use libraw_sys::*;
+
 pub struct Makernotes {
-    pub canon: libraw_canon_makernotes_t,
-    pub nikon: libraw_nikon_makernotes_t,
-    pub hasselblad: libraw_hasselblad_makernotes_t,
-    pub fuji: libraw_fuji_info_t,
-    pub olympus: libraw_olympus_makernotes_t,
-    pub sony: libraw_sony_info_t,
-    pub kodak: libraw_kodak_makernotes_t,
-    pub panasonic: libraw_panasonic_makernotes_t,
-    pub pentax: libraw_pentax_makernotes_t,
-    pub phaseone: libraw_p1_makernotes_t,
-    pub ricoh: libraw_ricoh_makernotes_t,
-    pub samsung: libraw_samsung_makernotes_t,
-    pub common: libraw_metadata_common_t,
+    inner: libraw_makernotes_t,
 }
 
-impl From<libraw_makernotes_t> for Makernotes {
-    fn from(value: libraw_makernotes_t) -> Self {
-        Makernotes {
-            canon: value.canon,
-            nikon: value.nikon,
-            hasselblad: value.hasselblad,
-            fuji: value.fuji,
-            olympus: value.olympus,
-            sony: value.sony,
-            kodak: value.kodak,
-            panasonic: value.panasonic,
-            pentax: value.pentax,
-            phaseone: value.phaseone,
-            ricoh: value.ricoh,
-            samsung: value.samsung,
-            common: value.common,
-        }
+impl Makernotes {
+    pub(crate) fn new(value: libraw_makernotes_t) -> Self {
+        Makernotes { inner: value }
+    }
+
+    #[inline]
+    pub fn canon(&self) -> canon::Canon {
+        canon::Canon::new(self.inner.canon)
+    }
+    #[inline]
+    pub fn nikon(&self) -> nikon::Nikon {
+        nikon::Nikon::new(self.inner.nikon)
+    }
+    #[inline]
+    pub fn hasselblad(&self) -> hasselblad::Hasselblad {
+        hasselblad::Hasselblad::new(self.inner.hasselblad)
+    }
+    #[inline]
+    pub fn fuji(&self) -> fuji::Fuji {
+        fuji::Fuji::new(self.inner.fuji)
+    }
+    #[inline]
+    pub fn olympus(&self) -> olympus::Olympus {
+        olympus::Olympus::new(self.inner.olympus)
+    }
+    #[inline]
+    pub fn sony(&self) -> sony::Sony {
+        sony::Sony::new(self.inner.sony)
+    }
+    #[inline]
+    pub fn kodak(&self) -> kodak::Kodak {
+        kodak::Kodak::new(self.inner.kodak)
+    }
+    #[inline]
+    pub fn panasonic(&self) -> panasonic::Panasonic {
+        panasonic::Panasonic::new(self.inner.panasonic)
+    }
+    #[inline]
+    pub fn pentax(&self) -> pentax::Pentax {
+        pentax::Pentax::new(self.inner.pentax)
+    }
+    #[inline]
+    pub fn phaseone(&self) -> phaseone::PhaseOne {
+        phaseone::PhaseOne::new(self.inner.phaseone)
+    }
+    #[inline]
+    pub fn ricoh(&self) -> ricoh::Ricoh {
+        ricoh::Ricoh::new(self.inner.ricoh)
+    }
+    #[inline]
+    pub fn samsung(&self) -> samsung::Samsung {
+        samsung::Samsung::new(self.inner.samsung)
+    }
+    #[inline]
+    pub fn common(&self) -> common::Common {
+        common::Common::new(self.inner.common)
     }
 }

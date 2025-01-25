@@ -13,3 +13,29 @@ pub fn non_zero<T: PartialEq + Default>(val: T) -> Option<T> {
         Some(val)
     }
 }
+
+#[macro_export]
+macro_rules! impl_property {
+    ($name:ident, Option<String>) => {
+        pub fn $name(&self) -> Option<String> {
+            crate::utils::string_from(self.inner.$name.as_ptr())
+        }
+    };
+    ($name:ident, $ty:ty) => {
+        #[inline]
+        pub fn $name(&self) -> $ty {
+            self.inner.$name
+        }
+    };
+    ($name:ident, $prop:ident, Option<String>) => {
+        pub fn $name(&self) -> Option<String> {
+            crate::utils::string_from(self.inner.$prop.as_ptr())
+        }
+    };
+    ($name:ident, $prop:ident, $ty:ty) => {
+        #[inline]
+        pub fn $name(&self) -> $ty {
+            self.inner.$prop
+        }
+    };
+}
