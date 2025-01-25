@@ -156,6 +156,8 @@ impl Drop for LibRaw {
 
 #[cfg(test)]
 mod tests {
+    use makernotes_lens::{format::CameraFormat, mount::CameraMount};
+
     use super::*;
 
     #[test]
@@ -193,5 +195,83 @@ mod tests {
 
         let lensinfo = libraw.lens();
         assert_eq!(lensinfo.exif_max_ap(), 1.4142135);
+        assert_eq!(lensinfo.focal_length_in_35mm_format(), 75);
+        let lens_makernotes = lensinfo.makernotes();
+        assert_eq!(lens_makernotes.lens_mount(), CameraMount::Nikon_F);
+        assert_eq!(lens_makernotes.camera_mount(), CameraMount::Nikon_F);
+
+        let makernotes = libraw.makernotes();
+        assert_eq!(makernotes.common().real_iso(), 100.0);
+
+        let other = libraw.other();
+        assert_eq!(other.focal_len(), 50.0);
+        assert_eq!(other.iso_speed(), 100.0);
+        assert_eq!(other.shutter(), 1.0 / 60.0);
+        assert_eq!(other.aperture(), 3.5);
+    }
+
+    #[test]
+    fn canon_400d1() {
+        let buf = include_bytes!("../../../raw-samples/CR2/sample_canon_400d1.cr2");
+        let libraw = LibRaw::open_buffer(buf).unwrap();
+        let iparams = libraw.idata();
+        assert_eq!(iparams.make(), Some("Canon".to_string()));
+        assert_eq!(iparams.model(), Some("EOS 400D".to_string()));
+        assert_eq!(iparams.normalized_make(), Some("Canon".to_string()));
+        assert_eq!(iparams.normalized_model(), Some("EOS 400D".to_string()));
+        assert_eq!(iparams.is_foveon(), false);
+
+        let lensinfo = libraw.lens();
+        let lens_makernotes = lensinfo.makernotes();
+        assert_eq!(lens_makernotes.lens_mount(), CameraMount::Canon_EF);
+        assert_eq!(lens_makernotes.camera_mount(), CameraMount::Canon_EF);
+
+        let makernotes = libraw.makernotes();
+        assert_eq!(makernotes.common().real_iso(), 100.0);
+
+        let other = libraw.other();
+        assert_eq!(other.focal_len(), 25.0);
+        assert_eq!(other.iso_speed(), 100.0);
+        assert_eq!(other.shutter(), 1.0 / 100.0);
+        assert_eq!(other.aperture(), 6.3);
+    }
+
+    #[test]
+    fn leica_m8() {
+        let buf = include_bytes!("../../../raw-samples/DNG/RAW_LEICA_M8.DNG");
+        let libraw = LibRaw::open_buffer(buf).unwrap();
+        let iparams = libraw.idata();
+        assert_eq!(iparams.make(), Some("Leica".to_string()));
+        assert_eq!(iparams.model(), Some("M8".to_string()));
+        assert_eq!(iparams.normalized_make(), Some("Leica".to_string()));
+        assert_eq!(iparams.normalized_model(), Some("M8".to_string()));
+        assert_eq!(iparams.is_foveon(), false);
+
+        let other = libraw.other();
+        assert_eq!(other.focal_len(), 50.0);
+        assert_eq!(other.iso_speed(), 160.0);
+        assert_eq!(other.shutter(), 12.0);
+        assert_eq!(other.aperture(), 4.0);
+    }
+
+    #[test]
+    fn panasonic_g1() {
+        let buf = include_bytes!("../../../raw-samples/RW2/RAW_PANASONIC_G1.RW2");
+        let libraw = LibRaw::open_buffer(buf).unwrap();
+        let iparams = libraw.idata();
+        assert_eq!(iparams.make(), Some("Panasonic".to_string()));
+        assert_eq!(iparams.model(), Some("DMC-G1".to_string()));
+        assert_eq!(iparams.normalized_make(), Some("Panasonic".to_string()));
+        assert_eq!(iparams.normalized_model(), Some("DMC-G1".to_string()));
+        assert_eq!(iparams.is_foveon(), false);
+
+        let lensinfo = libraw.lens();
+        assert_eq!(lensinfo.exif_max_ap(), 3.4982677);
+
+        let other = libraw.other();
+        assert_eq!(other.focal_len(), 14.0);
+        assert_eq!(other.iso_speed(), 100.0);
+        assert_eq!(other.shutter(), 1.0 / 400.0);
+        assert_eq!(other.aperture(), 6.3);
     }
 }
