@@ -7,6 +7,7 @@ pub mod makernotes;
 pub mod makernotes_lens;
 pub mod result;
 pub mod sizes;
+pub mod thumbnail;
 mod utils;
 
 use colordata::ColorData;
@@ -21,6 +22,7 @@ use std::{
     ffi::{CStr, CString},
     path::Path,
 };
+use thumbnail::Thumbnail;
 
 #[derive(Debug)]
 pub struct LibRaw {
@@ -52,7 +54,7 @@ impl LibRaw {
         let names = unsafe { libraw_sys::libraw_cameraList() };
         for i in 0..count {
             let name = unsafe { names.offset(i as isize) };
-            let name = unsafe { std::ffi::CStr::from_ptr(*name) };
+            let name = unsafe { CStr::from_ptr(*name) };
             let name = name.to_string_lossy().into_owned();
             list.push(name);
         }
@@ -142,8 +144,8 @@ impl LibRaw {
         ImgOther::new(unsafe { (*self.inner).other })
     }
 
-    pub fn thumbnail(&self) -> libraw_sys::libraw_thumbnail_t {
-        unsafe { (*self.inner).thumbnail }
+    pub fn thumbnail(&self) -> Thumbnail {
+        Thumbnail::new(unsafe { (*self.inner).thumbnail })
     }
 
     pub fn params(&self) -> libraw_sys::libraw_output_params_t {
