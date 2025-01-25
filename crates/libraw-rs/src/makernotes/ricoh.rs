@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Ricoh {
-    inner: libraw_ricoh_makernotes_t,
+    inner: libraw_sys::libraw_ricoh_makernotes_t,
 }
 
 impl Ricoh {
-    pub fn new(value: libraw_ricoh_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_ricoh_makernotes_t) -> Self {
         Ricoh { inner: value }
     }
 

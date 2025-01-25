@@ -1,14 +1,13 @@
 use std::borrow::Cow;
 
 use crate::impl_property;
-use libraw_sys::*;
 
 pub struct IParams {
-    inner: libraw_iparams_t,
+    inner: libraw_sys::libraw_iparams_t,
 }
 
 impl IParams {
-    pub(crate) fn new(inner: libraw_iparams_t) -> Self {
+    pub(crate) fn new(inner: libraw_sys::libraw_iparams_t) -> Self {
         IParams { inner }
     }
     impl_property!(make, Option<String>);

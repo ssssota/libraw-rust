@@ -1,12 +1,10 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Canon {
-    inner: libraw_canon_makernotes_t,
+    inner: libraw_sys::libraw_canon_makernotes_t,
 }
 impl Canon {
-    pub(crate) fn new(value: libraw_canon_makernotes_t) -> Self {
+    pub(crate) fn new(value: libraw_sys::libraw_canon_makernotes_t) -> Self {
         Canon { inner: value }
     }
     impl_property!(color_data_ver, ColorDataVer, i32);
@@ -43,10 +41,26 @@ impl Canon {
     impl_property!(highlight_tone_priority, HighlightTonePriority, i32);
     impl_property!(quality, Quality, i16);
     impl_property!(canon_log, CanonLog, i32);
-    impl_property!(default_crop_absolute, DefaultCropAbsolute, libraw_area_t);
-    impl_property!(recommended_image_area, RecommendedImageArea, libraw_area_t);
-    impl_property!(left_optical_black, LeftOpticalBlack, libraw_area_t);
-    impl_property!(upper_optical_black, UpperOpticalBlack, libraw_area_t);
-    impl_property!(active_area, ActiveArea, libraw_area_t);
+    impl_property!(
+        default_crop_absolute,
+        DefaultCropAbsolute,
+        libraw_sys::libraw_area_t
+    );
+    impl_property!(
+        recommended_image_area,
+        RecommendedImageArea,
+        libraw_sys::libraw_area_t
+    );
+    impl_property!(
+        left_optical_black,
+        LeftOpticalBlack,
+        libraw_sys::libraw_area_t
+    );
+    impl_property!(
+        upper_optical_black,
+        UpperOpticalBlack,
+        libraw_sys::libraw_area_t
+    );
+    impl_property!(active_area, ActiveArea, libraw_sys::libraw_area_t);
     impl_property!(iso_gain, ISOgain, [i16; 2]);
 }

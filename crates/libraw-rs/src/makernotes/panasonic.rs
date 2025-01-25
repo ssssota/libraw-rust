@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Panasonic {
-    inner: libraw_panasonic_makernotes_t,
+    inner: libraw_sys::libraw_panasonic_makernotes_t,
 }
 
 impl Panasonic {
-    pub fn new(value: libraw_panasonic_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_panasonic_makernotes_t) -> Self {
         Panasonic { inner: value }
     }
 

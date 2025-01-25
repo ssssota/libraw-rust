@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Kodak {
-    inner: libraw_kodak_makernotes_t,
+    inner: libraw_sys::libraw_kodak_makernotes_t,
 }
 
 impl Kodak {
-    pub fn new(value: libraw_kodak_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_kodak_makernotes_t) -> Self {
         Kodak { inner: value }
     }
 

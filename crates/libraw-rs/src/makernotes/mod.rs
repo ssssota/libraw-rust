@@ -12,14 +12,12 @@ pub mod ricoh;
 pub mod samsung;
 pub mod sony;
 
-use libraw_sys::*;
-
 pub struct Makernotes {
-    inner: libraw_makernotes_t,
+    inner: libraw_sys::libraw_makernotes_t,
 }
 
 impl Makernotes {
-    pub(crate) fn new(value: libraw_makernotes_t) -> Self {
+    pub(crate) fn new(value: libraw_sys::libraw_makernotes_t) -> Self {
         Makernotes { inner: value }
     }
 

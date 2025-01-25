@@ -4,16 +4,14 @@ pub mod mount;
 
 use std::ffi::c_ulonglong;
 
-use libraw_sys::libraw_makernotes_lens_t;
-
 use crate::impl_property;
 
 pub struct MakernotesLens {
-    inner: libraw_makernotes_lens_t,
+    inner: libraw_sys::libraw_makernotes_lens_t,
 }
 
 impl MakernotesLens {
-    pub(crate) fn new(inner: libraw_makernotes_lens_t) -> Self {
+    pub(crate) fn new(inner: libraw_sys::libraw_makernotes_lens_t) -> Self {
         MakernotesLens { inner }
     }
     impl_property!(lens_id, LensID, c_ulonglong);

@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Samsung {
-    inner: libraw_samsung_makernotes_t,
+    inner: libraw_sys::libraw_samsung_makernotes_t,
 }
 
 impl Samsung {
-    pub fn new(value: libraw_samsung_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_samsung_makernotes_t) -> Self {
         Samsung { inner: value }
     }
 

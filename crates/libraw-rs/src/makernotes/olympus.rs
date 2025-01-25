@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Olympus {
-    inner: libraw_olympus_makernotes_t,
+    inner: libraw_sys::libraw_olympus_makernotes_t,
 }
 
 impl Olympus {
-    pub fn new(value: libraw_olympus_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_olympus_makernotes_t) -> Self {
         Olympus { inner: value }
     }
 

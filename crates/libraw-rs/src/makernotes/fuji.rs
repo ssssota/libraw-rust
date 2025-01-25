@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Fuji {
-    inner: libraw_fuji_info_t,
+    inner: libraw_sys::libraw_fuji_info_t,
 }
 
 impl Fuji {
-    pub fn new(value: libraw_fuji_info_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_fuji_info_t) -> Self {
         Fuji { inner: value }
     }
 

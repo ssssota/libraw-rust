@@ -14,7 +14,6 @@ use image::ProcessedImage;
 use imgother::ImgOther;
 use iparams::IParams;
 use lensinfo::LensInfo;
-use libraw_sys::*;
 use makernotes::Makernotes;
 use result::{handle_error, Error, Result};
 use sizes::Sizes;
@@ -25,28 +24,32 @@ use std::{
 
 #[derive(Debug)]
 pub struct LibRaw {
-    inner: *mut libraw_data_t,
+    inner: *mut libraw_sys::libraw_data_t,
 }
 
 impl LibRaw {
     pub fn version() -> &'static str {
-        unsafe { CStr::from_ptr(libraw_version()).to_str().unwrap() }
+        unsafe {
+            CStr::from_ptr(libraw_sys::libraw_version())
+                .to_str()
+                .unwrap()
+        }
     }
 
     #[inline]
     pub fn version_number() -> i32 {
-        unsafe { libraw_versionNumber() }
+        unsafe { libraw_sys::libraw_versionNumber() }
     }
 
     #[inline]
     pub fn camera_count() -> i32 {
-        unsafe { libraw_cameraCount() }
+        unsafe { libraw_sys::libraw_cameraCount() }
     }
 
     pub fn camera_list() -> Vec<String> {
         let mut list = Vec::new();
         let count = LibRaw::camera_count();
-        let names = unsafe { libraw_cameraList() };
+        let names = unsafe { libraw_sys::libraw_cameraList() };
         for i in 0..count {
             let name = unsafe { names.offset(i as isize) };
             let name = unsafe { std::ffi::CStr::from_ptr(*name) };
@@ -57,51 +60,51 @@ impl LibRaw {
     }
 
     pub fn open_file<P: AsRef<Path>>(path: &P) -> Result<Self> {
-        let inner = unsafe { libraw_init(0) };
+        let inner = unsafe { libraw_sys::libraw_init(0) };
         let path = path.as_ref();
         let path = path.to_str().ok_or(Error::InvalidPath)?;
         let path = CString::new(path).map_err(|_| Error::InvalidPath)?;
-        handle_error(unsafe { libraw_open_file(inner, path.as_ptr()) })?;
+        handle_error(unsafe { libraw_sys::libraw_open_file(inner, path.as_ptr()) })?;
         Ok(LibRaw { inner })
     }
 
     pub fn open_buffer(buffer: &[u8]) -> Result<Self> {
-        let inner = unsafe { libraw_init(0) };
+        let inner = unsafe { libraw_sys::libraw_init(0) };
         handle_error(unsafe {
-            libraw_open_buffer(inner, buffer.as_ptr() as *const _, buffer.len())
+            libraw_sys::libraw_open_buffer(inner, buffer.as_ptr() as *const _, buffer.len())
         })?;
         Ok(LibRaw { inner })
     }
 
     pub fn unpack(&self) -> Result<()> {
-        handle_error(unsafe { libraw_unpack(self.inner) })
+        handle_error(unsafe { libraw_sys::libraw_unpack(self.inner) })
     }
 
     pub fn raw2image(&self) -> Result<()> {
-        handle_error(unsafe { libraw_raw2image(self.inner) })
+        handle_error(unsafe { libraw_sys::libraw_raw2image(self.inner) })
     }
 
     pub fn dcraw_process(&self) -> Result<()> {
-        handle_error(unsafe { libraw_dcraw_process(self.inner) })
+        handle_error(unsafe { libraw_sys::libraw_dcraw_process(self.inner) })
     }
 
     pub fn dcraw_ppm_tiff_writer<P: AsRef<Path>>(&self, path: &P) -> Result<()> {
         let path = path.as_ref();
         let path = path.to_str().ok_or(Error::InvalidPath)?;
         let path = CString::new(path).map_err(|_| Error::InvalidPath)?;
-        handle_error(unsafe { libraw_dcraw_ppm_tiff_writer(self.inner, path.as_ptr()) })
+        handle_error(unsafe { libraw_sys::libraw_dcraw_ppm_tiff_writer(self.inner, path.as_ptr()) })
     }
 
     pub fn dcraw_thumb_writer<P: AsRef<Path>>(&self, path: &P) -> Result<()> {
         let path = path.as_ref();
         let path = path.to_str().ok_or(Error::InvalidPath)?;
         let path = CString::new(path).map_err(|_| Error::InvalidPath)?;
-        handle_error(unsafe { libraw_dcraw_thumb_writer(self.inner, path.as_ptr()) })
+        handle_error(unsafe { libraw_sys::libraw_dcraw_thumb_writer(self.inner, path.as_ptr()) })
     }
 
     pub fn dcraw_make_mem_image(&self) -> Result<ProcessedImage> {
         let ptr = std::ptr::null_mut();
-        let image = unsafe { *libraw_dcraw_make_mem_image(self.inner, ptr) };
+        let image = unsafe { *libraw_sys::libraw_dcraw_make_mem_image(self.inner, ptr) };
         handle_error(ptr as i32)?;
         let image = ProcessedImage::new(image);
         Ok(image)
@@ -109,7 +112,7 @@ impl LibRaw {
 
     pub fn dcraw_make_mem_thumb(&self) -> Result<ProcessedImage> {
         let ptr = std::ptr::null_mut();
-        let image = unsafe { *libraw_dcraw_make_mem_thumb(self.inner, ptr) };
+        let image = unsafe { *libraw_sys::libraw_dcraw_make_mem_thumb(self.inner, ptr) };
         handle_error(ptr as i32)?;
         let image = ProcessedImage::new(image);
         Ok(image)
@@ -139,18 +142,18 @@ impl LibRaw {
         ImgOther::new(unsafe { (*self.inner).other })
     }
 
-    pub fn thumbnail(&self) -> libraw_thumbnail_t {
+    pub fn thumbnail(&self) -> libraw_sys::libraw_thumbnail_t {
         unsafe { (*self.inner).thumbnail }
     }
 
-    pub fn params(&self) -> libraw_output_params_t {
+    pub fn params(&self) -> libraw_sys::libraw_output_params_t {
         unsafe { (*self.inner).params }
     }
 }
 
 impl Drop for LibRaw {
     fn drop(&mut self) {
-        unsafe { libraw_close(self.inner) };
+        unsafe { libraw_sys::libraw_close(self.inner) };
     }
 }
 

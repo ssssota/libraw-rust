@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Nikon {
-    inner: libraw_nikon_makernotes_t,
+    inner: libraw_sys::libraw_nikon_makernotes_t,
 }
 
 impl Nikon {
-    pub(crate) fn new(value: libraw_nikon_makernotes_t) -> Self {
+    pub(crate) fn new(value: libraw_sys::libraw_nikon_makernotes_t) -> Self {
         Nikon { inner: value }
     }
     impl_property!(exposure_bracket_value, ExposureBracketValue, f64);
@@ -73,7 +71,7 @@ impl Nikon {
     impl_property!(
         sensor_high_speed_crop,
         SensorHighSpeedCrop,
-        libraw_sensor_highspeed_crop_t
+        libraw_sys::libraw_sensor_highspeed_crop_t
     );
     impl_property!(sensor_width, SensorWidth, u16);
     impl_property!(sensor_height, SensorHeight, u16);

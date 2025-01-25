@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct PhaseOne {
-    inner: libraw_p1_makernotes_t,
+    inner: libraw_sys::libraw_p1_makernotes_t,
 }
 
 impl PhaseOne {
-    pub fn new(value: libraw_p1_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_p1_makernotes_t) -> Self {
         PhaseOne { inner: value }
     }
 

@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Hasselblad {
-    inner: libraw_hasselblad_makernotes_t,
+    inner: libraw_sys::libraw_hasselblad_makernotes_t,
 }
 
 impl Hasselblad {
-    pub fn new(value: libraw_hasselblad_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_hasselblad_makernotes_t) -> Self {
         Hasselblad { inner: value }
     }
 

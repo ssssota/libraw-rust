@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Pentax {
-    inner: libraw_pentax_makernotes_t,
+    inner: libraw_sys::libraw_pentax_makernotes_t,
 }
 
 impl Pentax {
-    pub fn new(value: libraw_pentax_makernotes_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_pentax_makernotes_t) -> Self {
         Pentax { inner: value }
     }
 

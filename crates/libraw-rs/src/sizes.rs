@@ -1,5 +1,3 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Sizes {
@@ -39,7 +37,7 @@ impl Sizes {
     impl_property!(iheight, u16);
     impl_property!(raw_pitch, u32);
     impl_property!(pixel_aspect, f64);
-    impl_property!(raw_inset_crops, [libraw_raw_inset_crop_t; 2]);
+    impl_property!(raw_inset_crops, [libraw_sys::libraw_raw_inset_crop_t; 2]);
     pub fn flip(&self) -> Rotation {
         Rotation::from((self.inner).flip)
     }

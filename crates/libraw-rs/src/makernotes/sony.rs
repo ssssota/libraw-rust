@@ -1,13 +1,11 @@
-use libraw_sys::*;
-
 use crate::impl_property;
 
 pub struct Sony {
-    inner: libraw_sony_info_t,
+    inner: libraw_sys::libraw_sony_info_t,
 }
 
 impl Sony {
-    pub fn new(value: libraw_sony_info_t) -> Self {
+    pub fn new(value: libraw_sys::libraw_sony_info_t) -> Self {
         Sony { inner: value }
     }
 

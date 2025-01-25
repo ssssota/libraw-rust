@@ -5,7 +5,7 @@ pub fn string_from(ptr: *const i8) -> Option<String> {
     cstr.to_str().map(|s| s.to_string()).ok()
 }
 
-pub fn non_zero<T: PartialEq + Default>(val: T) -> Option<T> {
+pub fn none_if_zero<T: PartialEq + Default>(val: T) -> Option<T> {
     // if val == 0
     if val == T::default() {
         None
@@ -24,7 +24,7 @@ macro_rules! impl_property {
     ($name:ident, Option<$ty:ty>) => {
         #[inline]
         pub fn $name(&self) -> Option<$ty> {
-            $crate::utils::non_zero(self.inner.$name)
+            $crate::utils::none_if_zero(self.inner.$name)
         }
     };
     ($name:ident, $ty:ty) => {
@@ -41,7 +41,7 @@ macro_rules! impl_property {
     ($name:ident, $prop:ident, Option<$ty:ty>) => {
         #[inline]
         pub fn $name(&self) -> Option<$ty> {
-            $crate::utils::non_zero(self.inner.$prop)
+            $crate::utils::none_if_zero(self.inner.$prop)
         }
     };
     ($name:ident, $prop:ident, $ty:ty) => {
