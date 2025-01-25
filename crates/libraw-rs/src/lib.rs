@@ -7,7 +7,7 @@ pub mod makernotes;
 pub mod makernotes_lens;
 pub mod result;
 pub mod sizes;
-pub mod utils;
+mod utils;
 
 use colordata::ColorData;
 use image::ProcessedImage;

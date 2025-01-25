@@ -1,8 +1,14 @@
 use std::ffi::CStr;
 
-pub fn string_from(ptr: *const i8) -> Option<String> {
-    let cstr = unsafe { CStr::from_ptr(unsafe { ptr }) };
-    cstr.to_str().map(|s| s.to_string()).ok()
+pub unsafe fn string_from(ptr: *const i8) -> Option<String> {
+    if ptr.is_null() {
+        return None;
+    }
+    CStr::from_ptr(ptr)
+        .to_str()
+        .ok()
+        .filter(|s| !s.is_empty())
+        .map(|s| s.to_string())
 }
 
 pub fn none_if_zero<T: PartialEq + Default>(val: T) -> Option<T> {
@@ -18,7 +24,7 @@ pub fn none_if_zero<T: PartialEq + Default>(val: T) -> Option<T> {
 macro_rules! impl_property {
     ($name:ident, Option<String>) => {
         pub fn $name(&self) -> Option<String> {
-            $crate::utils::string_from(self.inner.$name.as_ptr())
+            unsafe { $crate::utils::string_from(self.inner.$name.as_ptr()) }
         }
     };
     ($name:ident, Option<$ty:ty>) => {
@@ -35,7 +41,7 @@ macro_rules! impl_property {
     };
     ($name:ident, $prop:ident, Option<String>) => {
         pub fn $name(&self) -> Option<String> {
-            $crate::utils::string_from(self.inner.$prop.as_ptr())
+            unsafe { $crate::utils::string_from(self.inner.$prop.as_ptr()) }
         }
     };
     ($name:ident, $prop:ident, Option<$ty:ty>) => {
