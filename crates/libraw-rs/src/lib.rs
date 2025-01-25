@@ -191,7 +191,7 @@ mod tests {
         assert_eq!(iparams.model(), Some("D90".to_string()));
         assert_eq!(iparams.normalized_make(), Some("Nikon".to_string()));
         assert_eq!(iparams.normalized_model(), Some("D90".to_string()));
-        assert_eq!(iparams.is_foveon(), false);
+        assert!(!iparams.is_foveon());
 
         let lensinfo = libraw.lens();
         assert_eq!(lensinfo.exif_max_ap(), Some(1.4142135));
@@ -219,7 +219,7 @@ mod tests {
         assert_eq!(iparams.model(), Some("EOS 400D".to_string()));
         assert_eq!(iparams.normalized_make(), Some("Canon".to_string()));
         assert_eq!(iparams.normalized_model(), Some("EOS 400D".to_string()));
-        assert_eq!(iparams.is_foveon(), false);
+        assert!(!iparams.is_foveon());
 
         let lensinfo = libraw.lens();
         let lens_makernotes = lensinfo.makernotes();
@@ -245,7 +245,7 @@ mod tests {
         assert_eq!(iparams.model(), Some("M8".to_string()));
         assert_eq!(iparams.normalized_make(), Some("Leica".to_string()));
         assert_eq!(iparams.normalized_model(), Some("M8".to_string()));
-        assert_eq!(iparams.is_foveon(), false);
+        assert!(!iparams.is_foveon());
 
         let makernotes = libraw.makernotes();
         assert_eq!(makernotes.common().real_iso(), None);
@@ -266,7 +266,7 @@ mod tests {
         assert_eq!(iparams.model(), Some("DMC-G1".to_string()));
         assert_eq!(iparams.normalized_make(), Some("Panasonic".to_string()));
         assert_eq!(iparams.normalized_model(), Some("DMC-G1".to_string()));
-        assert_eq!(iparams.is_foveon(), false);
+        assert!(!iparams.is_foveon());
 
         let lensinfo = libraw.lens();
         assert_eq!(lensinfo.exif_max_ap(), Some(3.4982677));

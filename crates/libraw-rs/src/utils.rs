@@ -1,7 +1,7 @@
 use std::ffi::CStr;
 
 pub fn string_from(ptr: *const i8) -> Option<String> {
-    let cstr = unsafe { CStr::from_ptr(ptr) };
+    let cstr = unsafe { CStr::from_ptr(unsafe { ptr }) };
     cstr.to_str().map(|s| s.to_string()).ok()
 }
 
