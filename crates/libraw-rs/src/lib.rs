@@ -156,7 +156,7 @@ impl Drop for LibRaw {
 
 #[cfg(test)]
 mod tests {
-    use makernotes_lens::{format::CameraFormat, mount::CameraMount};
+    use makernotes_lens::mount::CameraMount;
 
     use super::*;
 
@@ -194,14 +194,14 @@ mod tests {
         assert_eq!(iparams.is_foveon(), false);
 
         let lensinfo = libraw.lens();
-        assert_eq!(lensinfo.exif_max_ap(), 1.4142135);
+        assert_eq!(lensinfo.exif_max_ap(), Some(1.4142135));
         assert_eq!(lensinfo.focal_length_in_35mm_format(), 75);
         let lens_makernotes = lensinfo.makernotes();
         assert_eq!(lens_makernotes.lens_mount(), CameraMount::Nikon_F);
         assert_eq!(lens_makernotes.camera_mount(), CameraMount::Nikon_F);
 
         let makernotes = libraw.makernotes();
-        assert_eq!(makernotes.common().real_iso(), 100.0);
+        assert_eq!(makernotes.common().real_iso(), Some(100.0));
 
         let other = libraw.other();
         assert_eq!(other.focal_len(), 50.0);
@@ -227,7 +227,7 @@ mod tests {
         assert_eq!(lens_makernotes.camera_mount(), CameraMount::Canon_EF);
 
         let makernotes = libraw.makernotes();
-        assert_eq!(makernotes.common().real_iso(), 100.0);
+        assert_eq!(makernotes.common().real_iso(), Some(100.0));
 
         let other = libraw.other();
         assert_eq!(other.focal_len(), 25.0);
@@ -246,6 +246,9 @@ mod tests {
         assert_eq!(iparams.normalized_make(), Some("Leica".to_string()));
         assert_eq!(iparams.normalized_model(), Some("M8".to_string()));
         assert_eq!(iparams.is_foveon(), false);
+
+        let makernotes = libraw.makernotes();
+        assert_eq!(makernotes.common().real_iso(), None);
 
         let other = libraw.other();
         assert_eq!(other.focal_len(), 50.0);
@@ -266,7 +269,10 @@ mod tests {
         assert_eq!(iparams.is_foveon(), false);
 
         let lensinfo = libraw.lens();
-        assert_eq!(lensinfo.exif_max_ap(), 3.4982677);
+        assert_eq!(lensinfo.exif_max_ap(), Some(3.4982677));
+
+        let makernotes = libraw.makernotes();
+        assert_eq!(makernotes.common().real_iso(), None);
 
         let other = libraw.other();
         assert_eq!(other.focal_len(), 14.0);

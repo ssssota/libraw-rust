@@ -21,6 +21,12 @@ macro_rules! impl_property {
             crate::utils::string_from(self.inner.$name.as_ptr())
         }
     };
+    ($name:ident, Option<$ty:ty>) => {
+        #[inline]
+        pub fn $name(&self) -> Option<$ty> {
+            crate::utils::non_zero(self.inner.$name)
+        }
+    };
     ($name:ident, $ty:ty) => {
         #[inline]
         pub fn $name(&self) -> $ty {
@@ -30,6 +36,12 @@ macro_rules! impl_property {
     ($name:ident, $prop:ident, Option<String>) => {
         pub fn $name(&self) -> Option<String> {
             crate::utils::string_from(self.inner.$prop.as_ptr())
+        }
+    };
+    ($name:ident, $prop:ident, Option<$ty:ty>) => {
+        #[inline]
+        pub fn $name(&self) -> Option<$ty> {
+            crate::utils::non_zero(self.inner.$prop)
         }
     };
     ($name:ident, $prop:ident, $ty:ty) => {

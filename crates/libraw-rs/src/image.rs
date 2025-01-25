@@ -19,6 +19,12 @@ impl ProcessedImage {
     }
 
     impl_property!(r#type, type_, LibRaw_image_formats);
+    impl_property!(height, u16);
+    impl_property!(width, u16);
+    impl_property!(colors, u16);
+    impl_property!(bits, u16);
+    impl_property!(data_size, u32);
+    impl_property!(data, [u8; 1usize]);
 }
 
 // pub type_: LibRaw_image_formats,
