@@ -1,22 +1,20 @@
 use std::borrow::Cow;
 
-use libraw_sys as sys;
-
 use crate::impl_property;
 
 pub struct ProcessedImage {
-    inner: sys::libraw_processed_image_t,
+    inner: libraw_sys::libraw_processed_image_t,
 }
 
 impl Drop for ProcessedImage {
     fn drop(&mut self) {
         let ptr = &mut self.inner as *mut _;
-        unsafe { sys::libraw_dcraw_clear_mem(ptr) };
+        unsafe { libraw_sys::libraw_dcraw_clear_mem(ptr) };
     }
 }
 
 impl ProcessedImage {
-    pub(crate) fn new(inner: sys::libraw_processed_image_t) -> Self {
+    pub(crate) fn new(inner: libraw_sys::libraw_processed_image_t) -> Self {
         ProcessedImage { inner }
     }
 
@@ -36,14 +34,14 @@ impl ProcessedImage {
 }
 
 pub enum ImageFormat {
-    JPEG = sys::LibRaw_image_formats_LIBRAW_IMAGE_JPEG as isize,
-    BITMAP = sys::LibRaw_image_formats_LIBRAW_IMAGE_BITMAP as isize,
+    JPEG = libraw_sys::LibRaw_image_formats_LIBRAW_IMAGE_JPEG as isize,
+    BITMAP = libraw_sys::LibRaw_image_formats_LIBRAW_IMAGE_BITMAP as isize,
 }
-impl From<sys::LibRaw_image_formats> for ImageFormat {
-    fn from(value: sys::LibRaw_image_formats) -> Self {
+impl From<libraw_sys::LibRaw_image_formats> for ImageFormat {
+    fn from(value: libraw_sys::LibRaw_image_formats) -> Self {
         match value {
-            sys::LibRaw_image_formats_LIBRAW_IMAGE_JPEG => ImageFormat::JPEG,
-            sys::LibRaw_image_formats_LIBRAW_IMAGE_BITMAP => ImageFormat::BITMAP,
+            libraw_sys::LibRaw_image_formats_LIBRAW_IMAGE_JPEG => ImageFormat::JPEG,
+            libraw_sys::LibRaw_image_formats_LIBRAW_IMAGE_BITMAP => ImageFormat::BITMAP,
             _ => unreachable!(),
         }
     }

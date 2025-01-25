@@ -1,4 +1,3 @@
-use libraw_sys as sys;
 #[allow(non_camel_case_types)]
 #[derive(Debug, PartialEq)]
 pub enum CameraMount {
@@ -52,51 +51,59 @@ pub enum CameraMount {
 impl From<u32> for CameraMount {
     fn from(value: u32) -> Self {
         match value {
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Alpa => CameraMount::Alpa,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_C => CameraMount::C,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_EF_M => CameraMount::Canon_EF_M,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_EF_S => CameraMount::Canon_EF_S,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_EF => CameraMount::Canon_EF,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_RF => CameraMount::Canon_RF,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Contax_N => CameraMount::Contax_N,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Contax645 => CameraMount::Contax645,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_FT => CameraMount::FT,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_mFT => CameraMount::mFT,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Fuji_GF => CameraMount::Fuji_GF,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Fuji_GX => CameraMount::Fuji_GX,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Fuji_X => CameraMount::Fuji_X,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Hasselblad_H => CameraMount::Hasselblad_H,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Hasselblad_V => CameraMount::Hasselblad_V,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Hasselblad_XCD => CameraMount::Hasselblad_XCD,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_M => CameraMount::Leica_M,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_R => CameraMount::Leica_R,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_S => CameraMount::Leica_S,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_SL => CameraMount::Leica_SL,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_TL => CameraMount::Leica_TL,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_LPS_L => CameraMount::LPS_L,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Mamiya67 => CameraMount::Mamiya67,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Mamiya645 => CameraMount::Mamiya645,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Minolta_A => CameraMount::Minolta_A,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Nikon_CX => CameraMount::Nikon_CX,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Nikon_F => CameraMount::Nikon_F,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Nikon_Z => CameraMount::Nikon_Z,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_PhaseOne_iXM_MV => CameraMount::PhaseOne_iXM_MV,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_PhaseOne_iXM_RS => CameraMount::PhaseOne_iXM_RS,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_PhaseOne_iXM => CameraMount::PhaseOne_iXM,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Pentax_645 => CameraMount::Pentax_645,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Pentax_K => CameraMount::Pentax_K,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Pentax_Q => CameraMount::Pentax_Q,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_RicohModule => CameraMount::RicohModule,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Rollei_bayonet => CameraMount::Rollei_bayonet,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Samsung_NX_M => CameraMount::Samsung_NX_M,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Samsung_NX => CameraMount::Samsung_NX,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Sigma_X3F => CameraMount::Sigma_X3F,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Sony_E => CameraMount::Sony_E,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_LF => CameraMount::LF,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_DigitalBack => CameraMount::DigitalBack,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_FixedLens => CameraMount::FixedLens,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_IL_UM => CameraMount::IL_UM,
-            sys::LibRaw_camera_mounts_LIBRAW_MOUNT_TheLastOne => CameraMount::TheLastOne,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Alpa => CameraMount::Alpa,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_C => CameraMount::C,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_EF_M => CameraMount::Canon_EF_M,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_EF_S => CameraMount::Canon_EF_S,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_EF => CameraMount::Canon_EF,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Canon_RF => CameraMount::Canon_RF,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Contax_N => CameraMount::Contax_N,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Contax645 => CameraMount::Contax645,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_FT => CameraMount::FT,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_mFT => CameraMount::mFT,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Fuji_GF => CameraMount::Fuji_GF,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Fuji_GX => CameraMount::Fuji_GX,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Fuji_X => CameraMount::Fuji_X,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Hasselblad_H => CameraMount::Hasselblad_H,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Hasselblad_V => CameraMount::Hasselblad_V,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Hasselblad_XCD => {
+                CameraMount::Hasselblad_XCD
+            }
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_M => CameraMount::Leica_M,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_R => CameraMount::Leica_R,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_S => CameraMount::Leica_S,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_SL => CameraMount::Leica_SL,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Leica_TL => CameraMount::Leica_TL,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_LPS_L => CameraMount::LPS_L,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Mamiya67 => CameraMount::Mamiya67,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Mamiya645 => CameraMount::Mamiya645,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Minolta_A => CameraMount::Minolta_A,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Nikon_CX => CameraMount::Nikon_CX,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Nikon_F => CameraMount::Nikon_F,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Nikon_Z => CameraMount::Nikon_Z,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_PhaseOne_iXM_MV => {
+                CameraMount::PhaseOne_iXM_MV
+            }
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_PhaseOne_iXM_RS => {
+                CameraMount::PhaseOne_iXM_RS
+            }
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_PhaseOne_iXM => CameraMount::PhaseOne_iXM,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Pentax_645 => CameraMount::Pentax_645,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Pentax_K => CameraMount::Pentax_K,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Pentax_Q => CameraMount::Pentax_Q,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_RicohModule => CameraMount::RicohModule,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Rollei_bayonet => {
+                CameraMount::Rollei_bayonet
+            }
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Samsung_NX_M => CameraMount::Samsung_NX_M,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Samsung_NX => CameraMount::Samsung_NX,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Sigma_X3F => CameraMount::Sigma_X3F,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Sony_E => CameraMount::Sony_E,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_LF => CameraMount::LF,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_DigitalBack => CameraMount::DigitalBack,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_FixedLens => CameraMount::FixedLens,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_IL_UM => CameraMount::IL_UM,
+            libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_TheLastOne => CameraMount::TheLastOne,
             _ => CameraMount::Unknown(value),
         }
     }

@@ -1,11 +1,10 @@
 use crate::{impl_property, makernotes_lens::MakernotesLens};
-use libraw_sys as sys;
 
 pub struct LensInfo {
-    inner: sys::libraw_lensinfo_t,
+    inner: libraw_sys::libraw_lensinfo_t,
 }
 impl LensInfo {
-    pub(crate) fn new(inner: sys::libraw_lensinfo_t) -> Self {
+    pub(crate) fn new(inner: libraw_sys::libraw_lensinfo_t) -> Self {
         LensInfo { inner }
     }
     impl_property!(min_focal, MinFocal, Option<f32>);
@@ -20,7 +19,7 @@ impl LensInfo {
     impl_property!(
         focal_length_in_35mm_format,
         FocalLengthIn35mmFormat,
-        sys::ushort
+        libraw_sys::ushort
     );
     pub fn makernotes(&self) -> MakernotesLens {
         MakernotesLens::new(self.inner.makernotes)
