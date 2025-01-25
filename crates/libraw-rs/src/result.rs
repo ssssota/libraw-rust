@@ -1,4 +1,4 @@
-use std::ffi::CStr;
+use std::{ffi::CStr, fmt::Display};
 
 pub type Result<T> = std::result::Result<T, Error>;
 
@@ -52,10 +52,15 @@ impl From<i32> for Error {
     }
 }
 
-impl ToString for Error {
-    fn to_string(&self) -> String {
+impl Display for Error {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.message())
+    }
+}
+impl Error {
+    pub fn message(&self) -> String {
         match self {
-            Error::InvalidPath => format!("Invalid path"),
+            Error::InvalidPath => "Invalid path".to_string(),
             Error::BadCrop => error_string(libraw_sys::LibRaw_errors_LIBRAW_BAD_CROP),
             Error::CancelledByCallback => {
                 error_string(libraw_sys::LibRaw_errors_LIBRAW_CANCELLED_BY_CALLBACK)

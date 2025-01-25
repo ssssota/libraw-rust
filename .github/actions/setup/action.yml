@@ -11,7 +11,6 @@ runs:
   steps:
     - uses: dtolnay/rust-toolchain@stable
       with:
-        targets: wasm32-unknown-unknown
         compnents: rustfmt, clippy
     - run: corepack enable
       shell: bash
