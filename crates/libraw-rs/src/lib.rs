@@ -29,38 +29,38 @@ pub struct LibRaw {
     inner: *mut libraw_sys::libraw_data_t,
 }
 
+pub fn version() -> &'static str {
+    unsafe {
+        CStr::from_ptr(libraw_sys::libraw_version())
+            .to_str()
+            .unwrap()
+    }
+}
+
+#[inline]
+pub fn version_number() -> i32 {
+    unsafe { libraw_sys::libraw_versionNumber() }
+}
+
+#[inline]
+pub fn camera_count() -> i32 {
+    unsafe { libraw_sys::libraw_cameraCount() }
+}
+
+pub fn camera_list() -> Vec<String> {
+    let mut list = Vec::new();
+    let count = camera_count();
+    let names = unsafe { libraw_sys::libraw_cameraList() };
+    for i in 0..count {
+        let name = unsafe { names.offset(i as isize) };
+        let name = unsafe { CStr::from_ptr(*name) };
+        let name = name.to_string_lossy().into_owned();
+        list.push(name);
+    }
+    list
+}
+
 impl LibRaw {
-    pub fn version() -> &'static str {
-        unsafe {
-            CStr::from_ptr(libraw_sys::libraw_version())
-                .to_str()
-                .unwrap()
-        }
-    }
-
-    #[inline]
-    pub fn version_number() -> i32 {
-        unsafe { libraw_sys::libraw_versionNumber() }
-    }
-
-    #[inline]
-    pub fn camera_count() -> i32 {
-        unsafe { libraw_sys::libraw_cameraCount() }
-    }
-
-    pub fn camera_list() -> Vec<String> {
-        let mut list = Vec::new();
-        let count = LibRaw::camera_count();
-        let names = unsafe { libraw_sys::libraw_cameraList() };
-        for i in 0..count {
-            let name = unsafe { names.offset(i as isize) };
-            let name = unsafe { CStr::from_ptr(*name) };
-            let name = name.to_string_lossy().into_owned();
-            list.push(name);
-        }
-        list
-    }
-
     pub fn open_file<P: AsRef<Path>>(path: &P) -> Result<Self> {
         let inner = unsafe { libraw_sys::libraw_init(0) };
         let path = path.as_ref();
@@ -167,17 +167,17 @@ mod tests {
 
     #[test]
     fn version() {
-        assert_eq!(LibRaw::version(), "0.22.0-Devel202403");
+        assert_eq!(super::version(), "0.22.0-Devel202403");
     }
 
     #[test]
     fn version_number() {
-        assert_eq!(LibRaw::version_number(), 5632);
+        assert_eq!(super::version_number(), 5632);
     }
 
     #[test]
     fn camera_list() {
-        let cameras = LibRaw::camera_list();
+        let cameras = super::camera_list();
         assert_eq!(cameras.len(), 1222);
         // Check for some known cameras
         assert!(cameras.contains(&"Adobe Digital Negative (DNG)".to_string()));
