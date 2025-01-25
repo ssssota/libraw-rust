@@ -1,5 +1,3 @@
-use libraw_rs::LibRaw;
-
 fn main() {
-    println!("version: {}", LibRaw::version());
+    println!("version: {}", libraw_rs::version());
 }
