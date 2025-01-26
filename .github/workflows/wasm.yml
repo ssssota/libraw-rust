@@ -1,4 +1,4 @@
-name: CI
+name: Build WASM
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
 
     steps:
