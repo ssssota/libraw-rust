@@ -17,4 +17,5 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: mymindstorm/setup-emsdk@v14
       - run: rustup target add wasm32-unknown-emscripten
+      - run: sudo apt update && sudo apt install -y gcc-multilib
       - run: cargo build --target wasm32-unknown-emscripten
