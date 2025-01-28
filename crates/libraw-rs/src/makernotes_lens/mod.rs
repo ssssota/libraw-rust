@@ -18,20 +18,20 @@ impl MakernotesLens {
     impl_property!(lens, Lens, Option<String>);
     #[inline]
     pub fn lens_format(&self) -> format::CameraFormat {
-        format::CameraFormat::from(self.inner.LensFormat as u32)
+        format::CameraFormat::from(self.inner.LensFormat as libraw_sys::LibRaw_camera_formats)
     }
     #[inline]
     pub fn lens_mount(&self) -> mount::CameraMount {
-        mount::CameraMount::from(self.inner.LensMount as u32)
+        mount::CameraMount::from(self.inner.LensMount as libraw_sys::LibRaw_camera_mounts)
     }
     impl_property!(cam_id, CamID, c_ulonglong);
     #[inline]
     pub fn camera_format(&self) -> format::CameraFormat {
-        format::CameraFormat::from(self.inner.CameraFormat as u32)
+        format::CameraFormat::from(self.inner.CameraFormat as libraw_sys::LibRaw_camera_formats)
     }
     #[inline]
     pub fn camera_mount(&self) -> mount::CameraMount {
-        mount::CameraMount::from(self.inner.CameraMount as u32)
+        mount::CameraMount::from(self.inner.CameraMount as libraw_sys::LibRaw_camera_mounts)
     }
     impl_property!(body, Option<String>);
     #[inline]

@@ -13,6 +13,9 @@ impl ColorData {
     impl_property!(black, u32);
     impl_property!(data_maximum, u32);
     impl_property!(maximum, u32);
+    #[cfg(windows)]
+    impl_property!(linear_max, [i32; 4]);
+    #[cfg(not(windows))]
     impl_property!(linear_max, [i64; 4]);
     impl_property!(fmaximum, f32);
     impl_property!(fnorm, f32);

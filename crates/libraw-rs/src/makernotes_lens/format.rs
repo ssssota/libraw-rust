@@ -1,6 +1,6 @@
 #[derive(Debug, PartialEq)]
 pub enum CameraFormat {
-    Unknown(u32),
+    Unknown(libraw_sys::LibRaw_camera_formats),
     FormatAPSC,
     FormatFF,
     FormatMF,
@@ -24,8 +24,8 @@ pub enum CameraFormat {
     Format68,
     FormatTheLastOne,
 }
-impl From<u32> for CameraFormat {
-    fn from(value: u32) -> Self {
+impl From<libraw_sys::LibRaw_camera_formats> for CameraFormat {
+    fn from(value: libraw_sys::LibRaw_camera_formats) -> Self {
         match value {
             libraw_sys::LibRaw_camera_formats_LIBRAW_FORMAT_APSC => CameraFormat::FormatAPSC,
             libraw_sys::LibRaw_camera_formats_LIBRAW_FORMAT_FF => CameraFormat::FormatFF,

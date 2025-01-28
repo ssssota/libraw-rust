@@ -1,7 +1,7 @@
 #[allow(non_camel_case_types)]
 #[derive(Debug, PartialEq)]
 pub enum CameraMount {
-    Unknown(u32),
+    Unknown(libraw_sys::LibRaw_camera_mounts),
     Alpa,
     C,
     Canon_EF_M,
@@ -48,8 +48,8 @@ pub enum CameraMount {
     IL_UM,
     TheLastOne,
 }
-impl From<u32> for CameraMount {
-    fn from(value: u32) -> Self {
+impl From<libraw_sys::LibRaw_camera_mounts> for CameraMount {
+    fn from(value: libraw_sys::LibRaw_camera_mounts) -> Self {
         match value {
             libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_Alpa => CameraMount::Alpa,
             libraw_sys::LibRaw_camera_mounts_LIBRAW_MOUNT_C => CameraMount::C,
