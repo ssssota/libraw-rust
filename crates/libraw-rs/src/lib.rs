@@ -213,6 +213,10 @@ mod tests {
         assert_eq!(other.iso_speed(), 100.0);
         assert_eq!(other.shutter(), 1.0 / 60.0);
         assert_eq!(other.aperture(), 3.5);
+
+        let sizes = libraw.sizes();
+        assert_eq!(sizes.raw_height(), 2868);
+        assert_eq!(sizes.raw_width(), 4352);
     }
 
     #[test]
@@ -239,6 +243,10 @@ mod tests {
         assert_eq!(other.iso_speed(), 100.0);
         assert_eq!(other.shutter(), 1.0 / 100.0);
         assert_eq!(other.aperture(), 6.3);
+
+        let sizes = libraw.sizes();
+        assert_eq!(sizes.raw_height(), 2622);
+        assert_eq!(sizes.raw_width(), 3948);
     }
 
     #[test]
@@ -260,6 +268,10 @@ mod tests {
         assert_eq!(other.iso_speed(), 160.0);
         assert_eq!(other.shutter(), 12.0);
         assert_eq!(other.aperture(), 4.0);
+
+        let sizes = libraw.sizes();
+        assert_eq!(sizes.raw_height(), 2638);
+        assert_eq!(sizes.raw_width(), 3920);
     }
 
     #[test]
@@ -284,5 +296,9 @@ mod tests {
         assert_eq!(other.iso_speed(), 100.0);
         assert_eq!(other.shutter(), 1.0 / 400.0);
         assert_eq!(other.aperture(), 6.3);
+
+        let sizes = libraw.sizes();
+        assert_eq!(sizes.raw_height(), 3016);
+        assert_eq!(sizes.raw_width(), 4060);
     }
 }
