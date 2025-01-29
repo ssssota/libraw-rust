@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Olympus {
     inner: libraw_sys::libraw_olympus_makernotes_t,
 }

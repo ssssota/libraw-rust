@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Canon {
     inner: libraw_sys::libraw_canon_makernotes_t,
 }

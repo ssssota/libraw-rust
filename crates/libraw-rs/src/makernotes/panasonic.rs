@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Panasonic {
     inner: libraw_sys::libraw_panasonic_makernotes_t,
 }

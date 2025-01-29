@@ -12,6 +12,7 @@ pub mod ricoh;
 pub mod samsung;
 pub mod sony;
 
+#[derive(Debug)]
 pub struct Makernotes {
     inner: libraw_sys::libraw_makernotes_t,
 }

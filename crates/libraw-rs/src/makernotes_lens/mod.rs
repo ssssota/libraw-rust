@@ -6,6 +6,7 @@ use std::ffi::c_ulonglong;
 
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct MakernotesLens {
     inner: libraw_sys::libraw_makernotes_lens_t,
 }

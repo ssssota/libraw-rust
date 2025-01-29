@@ -1,7 +1,8 @@
 use std::borrow::Cow;
 
-use crate::impl_property;
+use crate::{impl_display, impl_property};
 
+#[derive(Debug)]
 pub struct IParams {
     inner: libraw_sys::libraw_iparams_t,
 }
@@ -40,3 +41,25 @@ impl IParams {
         }
     }
 }
+
+impl_display!(
+    IParams,
+    [
+        make,
+        model,
+        software,
+        normalized_make,
+        normalized_model,
+        maker_index,
+        raw_count,
+        dng_version,
+        colors,
+        filters,
+        xtrans,
+        xtrans_abs,
+        cdesc,
+        xmplen,
+        is_foveon,
+        xmpdata
+    ]
+);

@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct PhaseOne {
     inner: libraw_sys::libraw_p1_makernotes_t,
 }

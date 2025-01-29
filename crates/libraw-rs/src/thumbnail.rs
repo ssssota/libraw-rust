@@ -1,5 +1,6 @@
-use crate::impl_property;
+use crate::{impl_display, impl_property};
 
+#[derive(Debug)]
 pub struct Thumbnail {
     inner: libraw_sys::libraw_thumbnail_t,
 }
@@ -21,6 +22,9 @@ impl Thumbnail {
     }
 }
 
+impl_display!(Thumbnail, [tformat, twidth, theight, tlength, tcolors]);
+
+#[derive(Debug, PartialEq)]
 pub enum ThumbnailFormat {
     Unknown = libraw_sys::LibRaw_thumbnail_formats_LIBRAW_THUMBNAIL_UNKNOWN as isize,
     JPEG = libraw_sys::LibRaw_thumbnail_formats_LIBRAW_THUMBNAIL_JPEG as isize,

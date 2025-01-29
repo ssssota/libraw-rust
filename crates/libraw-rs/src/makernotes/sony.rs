@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Sony {
     inner: libraw_sys::libraw_sony_info_t,
 }

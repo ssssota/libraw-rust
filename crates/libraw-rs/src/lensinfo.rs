@@ -1,5 +1,6 @@
-use crate::{impl_property, makernotes_lens::MakernotesLens};
+use crate::{impl_display, impl_property, makernotes_lens::MakernotesLens};
 
+#[derive(Debug)]
 pub struct LensInfo {
     inner: libraw_sys::libraw_lensinfo_t,
 }
@@ -25,3 +26,19 @@ impl LensInfo {
         MakernotesLens::new(self.inner.makernotes)
     }
 }
+
+impl_display!(
+    LensInfo,
+    [
+        min_focal,
+        max_focal,
+        max_ap4_min_focal,
+        max_ap4_max_focal,
+        exif_max_ap,
+        lens_make,
+        lens,
+        lens_serial,
+        internal_lens_serial,
+        focal_length_in_35mm_format
+    ]
+);

@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Ricoh {
     inner: libraw_sys::libraw_ricoh_makernotes_t,
 }

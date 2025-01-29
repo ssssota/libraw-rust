@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct ColorData {
     inner: libraw_sys::libraw_colordata_t,
 }
