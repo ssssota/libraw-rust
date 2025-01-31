@@ -1,0 +1,14 @@
+services:
+  build:
+    build:
+      context: ../..
+      dockerfile: ./dockerfiles/wasm/Dockerfile
+    volumes:
+      - type: bind
+        source: ../../target
+        target: /app/target
+      - type: bind
+        source: ../../crates
+        target: /app/crates
+    working_dir: /app
+    command: ["cargo", "build", "--release", "--target=wasm32-unknown-emscripten"]

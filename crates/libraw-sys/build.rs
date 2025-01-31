@@ -44,8 +44,9 @@ fn build(out_dir: &Path) {
 }
 
 fn bindings(out_dir: &Path) {
-    let bindings = bindgen::Builder::default()
+    let builder = bindgen::Builder::default()
         .header("LibRaw/libraw/libraw.h")
+        .clang_arg("-fvisibility=default")
         .use_core()
         .ctypes_prefix("libc")
         .generate_comments(true)
@@ -143,11 +144,11 @@ fn bindings(out_dir: &Path) {
         .blocklist_function("truncl")
         .blocklist_function("y0l")
         .blocklist_function("y1l")
-        .blocklist_function("ynl")
-        .generate()
-        .expect("Unable to generate bindings");
+        .blocklist_function("ynl");
 
-    bindings
+    builder
+        .generate()
+        .expect("Unable to generate bindings")
         .write_to_file(out_dir.join("bindings.rs"))
         .expect("Couldn't write bindings!");
 }
