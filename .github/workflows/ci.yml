@@ -34,6 +34,8 @@ jobs:
           submodules: recursive
       - uses: mymindstorm/setup-emsdk@v14
       - uses: ./.github/actions/setup
+      - run: which emcc
+      - run: ls $(which emcc)
       - run: rustup target add wasm32-unknown-emscripten
       - run: cargo build --target wasm32-unknown-emscripten
         env:
