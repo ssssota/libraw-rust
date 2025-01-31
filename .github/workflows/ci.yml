@@ -34,10 +34,6 @@ jobs:
           submodules: recursive
       - uses: mymindstorm/setup-emsdk@v14
       - uses: ./.github/actions/setup
-
-      - run: ls -l $(dirname $(which emcc))/..
-      - run: ls -l $(dirname $(which emcc))/cache
+      - run: echo "BINDGEN_EXTRA_CLANG_ARGS=--sysroot=$(dirname $(which emcc))/cache/sysroot" >> $GITHUB_ENV
       - run: rustup target add wasm32-unknown-emscripten
       - run: cargo build --target wasm32-unknown-emscripten
-        env:
-          BINDGEN_EXTRA_CLANG_ARGS: --sysroot=${{github.workspace}}/emsdk/upstream/emscripten/cache/sysroot
