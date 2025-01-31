@@ -44,14 +44,14 @@ pub fn camera_count() -> i32 {
     unsafe { libraw_sys::libraw_cameraCount() }
 }
 
-pub fn camera_list() -> Vec<String> {
+pub fn camera_list() -> Vec<&'static str> {
     let mut list = Vec::new();
     let count = camera_count();
     let names = unsafe { libraw_sys::libraw_cameraList() };
     for i in 0..count {
         let name = unsafe { names.offset(i as isize) };
         let name = unsafe { CStr::from_ptr(*name) };
-        let name = name.to_string_lossy().into_owned();
+        let name = name.to_str().unwrap();
         list.push(name);
     }
     list
@@ -180,11 +180,11 @@ mod tests {
         let cameras = super::camera_list();
         assert_eq!(cameras.len(), 1222);
         // Check for some known cameras
-        assert!(cameras.contains(&"Adobe Digital Negative (DNG)".to_string()));
-        assert!(cameras.contains(&"Canon EOS R3".to_string()));
-        assert!(cameras.contains(&"Leica M11".to_string()));
-        assert!(cameras.contains(&"Nikon Z fc".to_string()));
-        assert!(cameras.contains(&"Sony ILCE-7M4 (A7 IV)".to_string()));
+        assert!(cameras.contains(&"Adobe Digital Negative (DNG)"));
+        assert!(cameras.contains(&"Canon EOS R3"));
+        assert!(cameras.contains(&"Leica M11"));
+        assert!(cameras.contains(&"Nikon Z fc"));
+        assert!(cameras.contains(&"Sony ILCE-7M4 (A7 IV)"));
     }
 
     #[test]
