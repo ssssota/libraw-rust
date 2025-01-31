@@ -16,12 +16,9 @@ use imgother::ImgOther;
 use iparams::IParams;
 use lensinfo::LensInfo;
 use makernotes::Makernotes;
-use result::{handle_error, Error, Result};
+use result::{handle_error, Result};
 use sizes::Sizes;
-use std::{
-    ffi::{CStr, CString},
-    path::Path,
-};
+use std::ffi::CStr;
 use thumbnail::Thumbnail;
 
 #[derive(Debug)]
@@ -61,11 +58,12 @@ pub fn camera_list() -> Vec<String> {
 }
 
 impl LibRaw {
-    pub fn open_file<P: AsRef<Path>>(path: &P) -> Result<Self> {
+    #[cfg(not(target_family = "wasm"))]
+    pub fn open_file<P: AsRef<std::path::Path>>(path: &P) -> Result<Self> {
         let inner = unsafe { libraw_sys::libraw_init(0) };
         let path = path.as_ref();
-        let path = path.to_str().ok_or(Error::InvalidPath)?;
-        let path = CString::new(path).map_err(|_| Error::InvalidPath)?;
+        let path = path.to_str().ok_or(result::Error::InvalidPath)?;
+        let path = std::ffi::CString::new(path).map_err(|_| result::Error::InvalidPath)?;
         handle_error(unsafe { libraw_sys::libraw_open_file(inner, path.as_ptr()) })?;
         Ok(LibRaw { inner })
     }
@@ -90,17 +88,19 @@ impl LibRaw {
         handle_error(unsafe { libraw_sys::libraw_dcraw_process(self.inner) })
     }
 
-    pub fn dcraw_ppm_tiff_writer<P: AsRef<Path>>(&self, path: &P) -> Result<()> {
+    #[cfg(not(target_family = "wasm"))]
+    pub fn dcraw_ppm_tiff_writer<P: AsRef<std::path::Path>>(&self, path: &P) -> Result<()> {
         let path = path.as_ref();
-        let path = path.to_str().ok_or(Error::InvalidPath)?;
-        let path = CString::new(path).map_err(|_| Error::InvalidPath)?;
+        let path = path.to_str().ok_or(result::Error::InvalidPath)?;
+        let path = std::ffi::CString::new(path).map_err(|_| result::Error::InvalidPath)?;
         handle_error(unsafe { libraw_sys::libraw_dcraw_ppm_tiff_writer(self.inner, path.as_ptr()) })
     }
 
-    pub fn dcraw_thumb_writer<P: AsRef<Path>>(&self, path: &P) -> Result<()> {
+    #[cfg(not(target_family = "wasm"))]
+    pub fn dcraw_thumb_writer<P: AsRef<std::path::Path>>(&self, path: &P) -> Result<()> {
         let path = path.as_ref();
-        let path = path.to_str().ok_or(Error::InvalidPath)?;
-        let path = CString::new(path).map_err(|_| Error::InvalidPath)?;
+        let path = path.to_str().ok_or(result::Error::InvalidPath)?;
+        let path = std::ffi::CString::new(path).map_err(|_| result::Error::InvalidPath)?;
         handle_error(unsafe { libraw_sys::libraw_dcraw_thumb_writer(self.inner, path.as_ptr()) })
     }
 

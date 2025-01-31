@@ -24,3 +24,25 @@ jobs:
       - run: cargo test
       - if: matrix.os == 'ubuntu-latest'
         run: cargo clippy && cargo fmt --check
+
+  build-wasm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/checkout@v4
+        with:
+          repository: emscripten-core/emsdk
+          path: emsdk
+      - run: |
+          cd emsdk
+          ./emsdk install latest
+          ./emsdk activate latest
+          source ./emsdk_env.sh
+      - uses: ./.github/actions/setup
+      - run: rustup target add wasm32-unknown-emscripten
+      - run: cargo build --target wasm32-unknown-emscripten
+        env:
+          BINDGEN_EXTRA_CLANG_ARGS: --sysroot=${{github.workspace}}/emsdk/upstream/emscripten/cache/sysroot
