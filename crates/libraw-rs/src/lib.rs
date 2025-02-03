@@ -208,15 +208,20 @@ mod tests {
         let makernotes = libraw.makernotes();
         assert_eq!(makernotes.common().real_iso(), Some(100.0));
 
-        let other = libraw.other();
-        assert_eq!(other.focal_len(), 50.0);
-        assert_eq!(other.iso_speed(), 100.0);
-        assert_eq!(other.shutter(), 1.0 / 60.0);
-        assert_eq!(other.aperture(), 3.5);
+        assert_eq!(
+            format!("{}", libraw.other()),
+            "ImgOther { iso_speed: 100.0, shutter: 0.016666668, aperture: 3.5, focal_len: 50.0, timestamp: 1234262827, shot_order: 0, gpsdata: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], parsed_gps: libraw_gps_info_t { latitude: [0.0, 0.0, 0.0], longitude: [0.0, 0.0, 0.0], gpstimestamp: [0.0, 0.0, 0.0], altitude: 0.0, altref: 0, latref: 0, longref: 0, gpsstatus: 0, gpsparsed: 1 }, desc: None, artist: None, analogbalance: [0.0, 0.0, 0.0, 0.0] }"
+        );
 
-        let sizes = libraw.sizes();
-        assert_eq!(sizes.raw_height(), 2868);
-        assert_eq!(sizes.raw_width(), 4352);
+        assert_eq!(
+            format!("{}", libraw.sizes()),
+            "Sizes { raw_width: 4352, raw_height: 2868, width: 4310, height: 2868, top_margin: 0, left_margin: 0, iwidth: 4310, iheight: 2868, raw_pitch: 0, pixel_aspect: 1.0, raw_inset_crops: [libraw_raw_inset_crop_t { cleft: 65535, ctop: 65535, cwidth: 0, cheight: 0 }, libraw_raw_inset_crop_t { cleft: 65535, ctop: 65535, cwidth: 0, cheight: 0 }], flip: Zero }"
+        );
+
+        assert_eq!(
+            format!("{}", libraw.thumbnail()),
+            "Thumbnail { tformat: Unknown, twidth: 4288, theight: 2848, tlength: 1382859, tcolors: 0 }"
+        );
     }
 
     #[test]
@@ -238,15 +243,20 @@ mod tests {
         let makernotes = libraw.makernotes();
         assert_eq!(makernotes.common().real_iso(), Some(100.0));
 
-        let other = libraw.other();
-        assert_eq!(other.focal_len(), 25.0);
-        assert_eq!(other.iso_speed(), 100.0);
-        assert_eq!(other.shutter(), 1.0 / 100.0);
-        assert_eq!(other.aperture(), 6.3);
+        assert_eq!(
+            format!("{}", libraw.other()),
+            "ImgOther { iso_speed: 100.0, shutter: 0.01, aperture: 6.3, focal_len: 25.0, timestamp: 1266203455, shot_order: 0, gpsdata: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], parsed_gps: libraw_gps_info_t { latitude: [0.0, 0.0, 0.0], longitude: [0.0, 0.0, 0.0], gpstimestamp: [0.0, 0.0, 0.0], altitude: 0.0, altref: 0, latref: 0, longref: 0, gpsstatus: 0, gpsparsed: 0 }, desc: None, artist: Some(\"Mike Gemuende\"), analogbalance: [0.0, 0.0, 0.0, 0.0] }"
+        );
 
-        let sizes = libraw.sizes();
-        assert_eq!(sizes.raw_height(), 2622);
-        assert_eq!(sizes.raw_width(), 3948);
+        assert_eq!(
+            format!("{}", libraw.sizes()),
+            "Sizes { raw_width: 3948, raw_height: 2622, width: 3906, height: 2602, top_margin: 18, left_margin: 42, iwidth: 3906, iheight: 2602, raw_pitch: 0, pixel_aspect: 1.0, raw_inset_crops: [libraw_raw_inset_crop_t { cleft: 52, ctop: 24, cwidth: 3888, cheight: 2591 }, libraw_raw_inset_crop_t { cleft: 65535, ctop: 65535, cwidth: 0, cheight: 0 }], flip: Zero }"
+        );
+
+        assert_eq!(
+            format!("{}", libraw.thumbnail()),
+            "Thumbnail { tformat: Unknown, twidth: 3888, theight: 2592, tlength: 2373662, tcolors: 0 }"
+        );
     }
 
     #[test]
@@ -263,15 +273,20 @@ mod tests {
         let makernotes = libraw.makernotes();
         assert_eq!(makernotes.common().real_iso(), None);
 
-        let other = libraw.other();
-        assert_eq!(other.focal_len(), 50.0);
-        assert_eq!(other.iso_speed(), 160.0);
-        assert_eq!(other.shutter(), 12.0);
-        assert_eq!(other.aperture(), 4.0);
+        assert_eq!(
+            format!("{}", libraw.other()),
+            "ImgOther { iso_speed: 160.0, shutter: 12.0, aperture: 4.0, focal_len: 50.0, timestamp: 1186060429, shot_order: 0, gpsdata: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], parsed_gps: libraw_gps_info_t { latitude: [0.0, 0.0, 0.0], longitude: [0.0, 0.0, 0.0], gpstimestamp: [0.0, 0.0, 0.0], altitude: 0.0, altref: 0, latref: 0, longref: 0, gpsstatus: 0, gpsparsed: 0 }, desc: None, artist: None, analogbalance: [0.0, 0.0, 0.0, 0.0] }"
+        );
 
-        let sizes = libraw.sizes();
-        assert_eq!(sizes.raw_height(), 2638);
-        assert_eq!(sizes.raw_width(), 3920);
+        assert_eq!(
+            format!("{}", libraw.sizes()),
+            "Sizes { raw_width: 3920, raw_height: 2638, width: 3920, height: 2638, top_margin: 0, left_margin: 0, iwidth: 3920, iheight: 2638, raw_pitch: 0, pixel_aspect: 1.0, raw_inset_crops: [libraw_raw_inset_crop_t { cleft: 2, ctop: 2, cwidth: 3916, cheight: 2634 }, libraw_raw_inset_crop_t { cleft: 65535, ctop: 65535, cwidth: 0, cheight: 0 }], flip: Zero }"
+        );
+
+        assert_eq!(
+            format!("{}", libraw.thumbnail()),
+            "Thumbnail { tformat: Unknown, twidth: 320, theight: 240, tlength: 65280, tcolors: 0 }"
+        );
     }
 
     #[test]
@@ -291,14 +306,19 @@ mod tests {
         let makernotes = libraw.makernotes();
         assert_eq!(makernotes.common().real_iso(), None);
 
-        let other = libraw.other();
-        assert_eq!(other.focal_len(), 14.0);
-        assert_eq!(other.iso_speed(), 100.0);
-        assert_eq!(other.shutter(), 1.0 / 400.0);
-        assert_eq!(other.aperture(), 6.3);
+        assert_eq!(
+            format!("{}", libraw.other()),
+            "ImgOther { iso_speed: 100.0, shutter: 0.0025, aperture: 6.3, focal_len: 14.0, timestamp: 1228889193, shot_order: 0, gpsdata: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], parsed_gps: libraw_gps_info_t { latitude: [0.0, 0.0, 0.0], longitude: [0.0, 0.0, 0.0], gpstimestamp: [0.0, 0.0, 0.0], altitude: 0.0, altref: 0, latref: 0, longref: 0, gpsstatus: 0, gpsparsed: 0 }, desc: None, artist: None, analogbalance: [0.0, 0.0, 0.0, 0.0] }",
+        );
 
-        let sizes = libraw.sizes();
-        assert_eq!(sizes.raw_height(), 3016);
-        assert_eq!(sizes.raw_width(), 4060);
+        assert_eq!(
+            format!("{}", libraw.sizes()),
+            "Sizes { raw_width: 4060, raw_height: 3016, width: 4016, height: 3016, top_margin: 0, left_margin: 0, iwidth: 4016, iheight: 3016, raw_pitch: 0, pixel_aspect: 1.0, raw_inset_crops: [libraw_raw_inset_crop_t { cleft: 8, ctop: 4, cwidth: 4000, cheight: 3000 }, libraw_raw_inset_crop_t { cleft: 65535, ctop: 65535, cwidth: 0, cheight: 0 }], flip: Zero }"
+        );
+
+        assert_eq!(
+            format!("{}", libraw.thumbnail()),
+            "Thumbnail { tformat: Unknown, twidth: 1920, theight: 1440, tlength: 687616, tcolors: 0 }"
+        );
     }
 }

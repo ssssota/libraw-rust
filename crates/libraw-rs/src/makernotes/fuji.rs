@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Fuji {
     inner: libraw_sys::libraw_fuji_info_t,
 }

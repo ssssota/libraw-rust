@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Pentax {
     inner: libraw_sys::libraw_pentax_makernotes_t,
 }

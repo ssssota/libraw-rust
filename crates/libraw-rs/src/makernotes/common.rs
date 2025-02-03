@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Common {
     inner: libraw_sys::libraw_metadata_common_t,
 }

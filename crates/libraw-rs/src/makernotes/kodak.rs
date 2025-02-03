@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Kodak {
     inner: libraw_sys::libraw_kodak_makernotes_t,
 }

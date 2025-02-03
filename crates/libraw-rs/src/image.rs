@@ -2,6 +2,7 @@ use std::borrow::Cow;
 
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct ProcessedImage {
     inner: libraw_sys::libraw_processed_image_t,
 }

@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Nikon {
     inner: libraw_sys::libraw_nikon_makernotes_t,
 }

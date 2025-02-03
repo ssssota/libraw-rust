@@ -1,9 +1,11 @@
-use crate::impl_property;
+use crate::{impl_display, impl_property};
 
+#[derive(Debug)]
 pub struct Sizes {
     inner: libraw_sys::libraw_image_sizes_t,
 }
 
+#[derive(Debug, PartialEq)]
 pub enum Rotation {
     Zero,
     OneEighty,
@@ -42,3 +44,21 @@ impl Sizes {
         Rotation::from((self.inner).flip)
     }
 }
+
+impl_display!(
+    Sizes,
+    [
+        raw_width,
+        raw_height,
+        width,
+        height,
+        top_margin,
+        left_margin,
+        iwidth,
+        iheight,
+        raw_pitch,
+        pixel_aspect,
+        raw_inset_crops,
+        flip
+    ]
+);

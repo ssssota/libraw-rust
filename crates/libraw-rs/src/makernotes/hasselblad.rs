@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Hasselblad {
     inner: libraw_sys::libraw_hasselblad_makernotes_t,
 }

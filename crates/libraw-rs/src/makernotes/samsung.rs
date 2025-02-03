@@ -1,5 +1,6 @@
 use crate::impl_property;
 
+#[derive(Debug)]
 pub struct Samsung {
     inner: libraw_sys::libraw_samsung_makernotes_t,
 }
