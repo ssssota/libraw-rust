@@ -13,6 +13,8 @@ fn build(out_dir: &Path) {
     let mut libraw = cc::Build::new();
     libraw.cpp(true);
     libraw.include("LibRaw/");
+    // libraw.archiver("llvm-ar");
+    libraw.cpp_link_stdlib(None);
 
     for source_file in list_libraw_cpp_files() {
         libraw.file(format!("LibRaw/{source_file}"));

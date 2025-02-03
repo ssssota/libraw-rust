@@ -10,5 +10,8 @@ services:
       - type: bind
         source: ../../crates
         target: /app/crates
+      - type: bind
+        source: ../../npm
+        target: /app/npm
     working_dir: /app
-    command: ["cargo", "build", "--release", "--target=wasm32-unknown-unknown"]
+    command: ["wasm-pack", "build", "npm"]
