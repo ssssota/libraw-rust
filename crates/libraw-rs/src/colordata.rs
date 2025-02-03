@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct ColorData {
     inner: libraw_sys::libraw_colordata_t,
@@ -47,3 +47,44 @@ impl ColorData {
     impl_property!(raw_bps, u32);
     impl_property!(exif_color_space, ExifColorSpace, i32);
 }
+
+impl_serialize!(
+    ColorData,
+    [
+        // curve,
+        // cblack,
+        black,
+        data_maximum,
+        maximum,
+        linear_max,
+        fmaximum,
+        fnorm,
+        white,
+        cam_mul,
+        pre_mul,
+        cmatrix,
+        ccm,
+        rgb_cam,
+        cam_xyz,
+        // phase_one_data,
+        flash_used,
+        canon_ev,
+        model2,
+        unique_camera_model,
+        localized_camera_model,
+        image_unique_id,
+        raw_data_unique_id,
+        original_raw_file_name,
+        // profile,
+        // profile_length,
+        black_stat,
+        // dng_color,
+        // dng_levels,
+        // wb_coeffs,
+        // wbct_coeffs,
+        as_shot_wb_applied,
+        // p1_color,
+        raw_bps,
+        exif_color_space
+    ]
+);

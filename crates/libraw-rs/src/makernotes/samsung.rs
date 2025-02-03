@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Samsung {
     inner: libraw_sys::libraw_samsung_makernotes_t,
@@ -17,3 +17,16 @@ impl Samsung {
     impl_property!(device_type, DeviceType, i32);
     impl_property!(lens_firmware, LensFirmware, [i8; 32usize]);
 }
+
+impl_serialize!(
+    Samsung,
+    [
+        image_size_full,
+        image_size_crop,
+        color_space,
+        key,
+        digital_gain,
+        device_type,
+        lens_firmware
+    ]
+);

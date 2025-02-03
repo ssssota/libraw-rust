@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Common {
     inner: libraw_sys::libraw_metadata_common_t,
@@ -43,3 +43,30 @@ impl Common {
     impl_property!(afdata, [libraw_sys::libraw_afinfo_item_t; 4usize]);
     impl_property!(afcount, i32);
 }
+
+impl_serialize!(
+    Common,
+    [
+        flash_ec,
+        flash_gn,
+        camera_temperature,
+        sensor_temperature,
+        sensor_temperature2,
+        lens_temperature,
+        ambient_temperature,
+        battery_temperature,
+        exif_ambient_temperature,
+        exif_humidity,
+        exif_pressure,
+        exif_water_depth,
+        exif_acceleration,
+        exif_camera_elevation_angle,
+        real_iso,
+        exif_exposure_index,
+        color_space,
+        firmware,
+        exposure_calibration_shift,
+        // afdata,
+        afcount
+    ]
+);

@@ -5,3 +5,9 @@ edition = "2021"
 
 [dependencies]
 libraw-sys = { path = "../libraw-sys" }
+
+serde = { version = "1.0", optional = true, features = ["derive"] }
+
+[features]
+default = []
+serialize = ["serde"]

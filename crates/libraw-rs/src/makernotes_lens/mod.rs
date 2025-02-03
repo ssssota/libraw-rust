@@ -4,7 +4,7 @@ pub mod mount;
 
 use std::ffi::c_ulonglong;
 
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct MakernotesLens {
     inner: libraw_sys::libraw_makernotes_lens_t,
@@ -64,3 +64,43 @@ impl MakernotesLens {
     impl_property!(focal_units, FocalUnits, u16);
     impl_property!(focal_length_in_35mm_format, FocalLengthIn35mmFormat, f32);
 }
+
+impl_serialize!(
+    MakernotesLens,
+    [
+        lens_id,
+        lens,
+        lens_format,
+        lens_mount,
+        camera_format,
+        camera_mount,
+        focal_type,
+        cam_id,
+        body,
+        lens_features_pre,
+        lens_features_suf,
+        min_focal,
+        max_focal,
+        max_ap4_min_focal,
+        max_ap4_max_focal,
+        min_ap4_min_focal,
+        min_ap4_max_focal,
+        max_ap,
+        min_ap,
+        cur_focal,
+        cur_ap,
+        max_ap4_cur_focal,
+        min_ap4_cur_focal,
+        min_focus_distance,
+        focus_range_index,
+        lens_f_stops,
+        teleconverter_id,
+        teleconverter,
+        adapter_id,
+        adapter,
+        attachment_id,
+        attachment,
+        focal_units,
+        focal_length_in_35mm_format
+    ]
+);

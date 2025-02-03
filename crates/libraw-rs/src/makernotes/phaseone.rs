@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct PhaseOne {
     inner: libraw_sys::libraw_p1_makernotes_t,
@@ -14,3 +14,8 @@ impl PhaseOne {
     impl_property!(firmware_string, FirmwareString, Option<String>);
     impl_property!(system_model, SystemModel, Option<String>);
 }
+
+impl_serialize!(
+    PhaseOne,
+    [software, system_type, firmware_string, system_model]
+);

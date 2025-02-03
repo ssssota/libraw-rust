@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Sony {
     inner: libraw_sys::libraw_sony_info_t,
@@ -87,3 +87,66 @@ impl Sony {
     impl_property!(meta_version, MetaVersion, Option<String>);
     impl_property!(aspect_ratio, AspectRatio, f32);
 }
+
+impl_serialize!(
+    Sony,
+    [
+        camera_type,
+        sony0x9400_version,
+        sony0x9400_release_mode2,
+        sony0x9400_sequence_image_number,
+        sony0x9400_sequence_length1,
+        sony0x9400_sequence_file_number,
+        sony0x9400_sequence_length2,
+        af_area_mode_setting,
+        af_area_mode,
+        flexible_spot_position,
+        af_point_selected,
+        af_point_selected_0x201e,
+        n_af_points_used,
+        af_points_used,
+        af_tracking,
+        af_type,
+        focus_location,
+        focus_position,
+        af_micro_adj_value,
+        af_micro_adj_on,
+        af_micro_adj_registered_lenses,
+        variable_low_pass_filter,
+        long_exposure_noise_reduction,
+        high_iso_noise_reduction,
+        hdr,
+        group2010,
+        group9050,
+        len_group9050,
+        real_iso_offset,
+        metering_mode_offset,
+        exposure_program_offset,
+        release_mode2_offset,
+        minolta_cam_id,
+        firmware,
+        image_count3_offset,
+        image_count3,
+        electronic_front_curtain_shutter,
+        metering_mode2,
+        sony_date_time,
+        shot_number_since_power_up,
+        pixel_shift_group_prefix,
+        pixel_shift_group_id,
+        n_shots_in_pixel_shift_group,
+        num_in_pixel_shift_group,
+        prd_image_height,
+        prd_image_width,
+        prd_total_bps,
+        prd_active_bps,
+        prd_storage_method,
+        prd_bayer_pattern,
+        sony_raw_file_type,
+        raw_file_type,
+        raw_size_type,
+        quality,
+        file_format,
+        meta_version,
+        aspect_ratio
+    ]
+);

@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Kodak {
     inner: libraw_sys::libraw_kodak_makernotes_t,
@@ -28,3 +28,27 @@ impl Kodak {
     impl_property!(iso_calibration_gain, ISOCalibrationGain, f32);
     impl_property!(analog_iso, AnalogISO, f32);
 }
+
+impl_serialize!(
+    Kodak,
+    [
+        black_level_top,
+        black_level_bottom,
+        offset_left,
+        offset_top,
+        clip_black,
+        clip_white,
+        romm_cam_daylight,
+        romm_cam_tungsten,
+        romm_cam_fluorescent,
+        romm_cam_flash,
+        romm_cam_custom,
+        romm_cam_auto,
+        val_018_percent,
+        val_100_percent,
+        val_170_percent,
+        maker_note_kodak_8a,
+        iso_calibration_gain,
+        analog_iso
+    ]
+);

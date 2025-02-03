@@ -1,5 +1,6 @@
 #[allow(non_camel_case_types)]
 #[derive(Debug, PartialEq)]
+#[cfg_attr(feature = "serialize", derive(serde::Serialize))]
 pub enum CameraMount {
     Unknown(libraw_sys::LibRaw_camera_mounts),
     Alpa,
