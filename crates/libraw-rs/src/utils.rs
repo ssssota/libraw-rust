@@ -57,3 +57,27 @@ macro_rules! impl_property {
         }
     };
 }
+
+#[macro_export]
+macro_rules! count {
+    () => (0usize);
+    ( $x:tt $($xs:tt)* ) => (1usize + $crate::count!($($xs)*));
+}
+
+#[macro_export]
+macro_rules! impl_serialize {
+    ($name:ident, [$prop0:ident, $($prop:ident),*]) => {
+        #[cfg(feature = "serialize")]
+        impl serde::Serialize for $name {
+            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+            where
+                S: serde::Serializer,
+            {
+                let mut s = serializer.serialize_struct(stringify!($name), $crate::count!($prop0 $($prop)*))?;
+                serde::ser::SerializeStruct::serialize_field(&mut s, stringify!($prop0), &self.$prop0())?;
+                $(serde::ser::SerializeStruct::serialize_field(&mut s, stringify!($prop), &self.$prop())?;)*
+                serde::ser::SerializeStruct::end(s)
+            }
+        }
+    };
+}

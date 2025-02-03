@@ -12,7 +12,7 @@ runs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         compnents: rustfmt, clippy
-    - run: corepack enable
+    - run: npm i -g corepack@0.31.0 && corepack enable
       shell: bash
     - uses: actions/setup-node@v4
       with:

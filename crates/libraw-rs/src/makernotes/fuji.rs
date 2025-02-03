@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Fuji {
     inner: libraw_sys::libraw_fuji_info_t,
@@ -51,3 +51,50 @@ impl Fuji {
     impl_property!(pixel_shift_offset, PixelShiftOffset, [f32; 2]);
     impl_property!(image_count, ImageCount, i32);
 }
+
+impl_serialize!(
+    Fuji,
+    [
+        expo_mid_point_shift,
+        dynamic_range,
+        film_mode,
+        dynamic_range_setting,
+        development_dynamic_range,
+        auto_dynamic_range,
+        d_range_priority,
+        d_range_priority_auto,
+        d_range_priority_fixed,
+        // fuji_model,
+        // fuji_model2,
+        brightness_compensation,
+        focus_mode,
+        af_mode,
+        focus_pixel,
+        priority_settings,
+        focus_settings,
+        af_c_settings,
+        focus_warning,
+        image_stabilization,
+        flash_mode,
+        wb_preset,
+        shutter_type,
+        exr_mode,
+        r#macro,
+        rating,
+        crop_mode,
+        serial_signature,
+        sensor_id,
+        raf_version,
+        raf_data_generation,
+        raf_data_version,
+        is_tsnerdts,
+        drive_mode,
+        black_level,
+        raf_data_image_size_table,
+        auto_bracketing,
+        sequence_number,
+        series_length,
+        pixel_shift_offset,
+        image_count
+    ]
+);

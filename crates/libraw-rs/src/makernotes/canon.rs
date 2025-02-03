@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Canon {
     inner: libraw_sys::libraw_canon_makernotes_t,
@@ -64,3 +64,44 @@ impl Canon {
     impl_property!(active_area, ActiveArea, libraw_sys::libraw_area_t);
     impl_property!(iso_gain, ISOgain, [i16; 2]);
 }
+
+impl_serialize!(
+    Canon,
+    [
+        color_data_ver,
+        color_data_sub_ver,
+        specular_white_level,
+        normal_white_level,
+        channel_black_level,
+        average_black_level,
+        multishot,
+        metering_mode,
+        spot_metering_mode,
+        flash_metering_mode,
+        flash_exposure_lock,
+        exposure_mode,
+        ae_setting,
+        image_stabilization,
+        flash_mode,
+        flash_activity,
+        flash_bits,
+        manual_flash_output,
+        flash_output,
+        flash_guide_number,
+        continuous_drive,
+        sensor_width,
+        sensor_height,
+        af_micro_adj_mode,
+        af_micro_adj_value,
+        makernotes_flip,
+        record_mode,
+        sraw_quality,
+        wbi,
+        rf_lens_id,
+        auto_lighting_optimizer,
+        highlight_tone_priority,
+        quality,
+        canon_log,
+        iso_gain
+    ]
+);

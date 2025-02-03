@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Nikon {
     inner: libraw_sys::libraw_nikon_makernotes_t,
@@ -85,3 +85,61 @@ impl Nikon {
     impl_property!(pitch_angle, PitchAngle, f64);
     impl_property!(yaw_angle, YawAngle, f64);
 }
+
+impl_serialize!(
+    Nikon,
+    [
+        exposure_bracket_value,
+        active_d_lighting,
+        shooting_mode,
+        image_stabilization,
+        vibration_reduction,
+        vr_mode,
+        flash_setting,
+        flash_type,
+        flash_exposure_compensation,
+        external_flash_exposure_comp,
+        flash_exposure_bracket_value,
+        flash_mode,
+        flash_exposure_compensation2,
+        flash_exposure_compensation3,
+        flash_exposure_compensation4,
+        flash_source,
+        flash_firmware,
+        external_flash_flags,
+        flash_control_commander_mode,
+        flash_output_and_compensation,
+        flash_focal_length,
+        flash_gn_distance,
+        flash_group_control_mode,
+        flash_group_output_and_compensation,
+        flash_color_filter,
+        nef_compression,
+        exposure_mode,
+        exposure_program,
+        nme_shots,
+        me_gain_on,
+        me_wb,
+        af_fine_tune,
+        af_fine_tune_index,
+        af_fine_tune_adj,
+        lens_data_version,
+        flash_info_version,
+        color_balance_version,
+        key,
+        nef_bit_depth,
+        high_speed_crop_format,
+        // sensor_high_speed_crop,
+        sensor_width,
+        sensor_height,
+        active_d_lighting,
+        picture_control_version,
+        picture_control_name,
+        picture_control_base,
+        shot_info_version,
+        makernotes_flip,
+        roll_angle,
+        pitch_angle,
+        yaw_angle
+    ]
+);

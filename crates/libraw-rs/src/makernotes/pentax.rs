@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Pentax {
     inner: libraw_sys::libraw_pentax_makernotes_t,
@@ -21,3 +21,20 @@ impl Pentax {
     impl_property!(multi_exposure, MultiExposure, u8);
     impl_property!(quality, Quality, u16);
 }
+
+impl_serialize!(
+    Pentax,
+    [
+        drive_mode,
+        focus_mode,
+        af_point_selected,
+        af_point_selected_area,
+        af_points_in_focus_version,
+        af_points_in_focus,
+        focus_position,
+        af_adjustment,
+        af_point_mode,
+        multi_exposure,
+        quality
+    ]
+);

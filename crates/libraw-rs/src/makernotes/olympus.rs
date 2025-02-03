@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Olympus {
     inner: libraw_sys::libraw_olympus_makernotes_t,
@@ -37,3 +37,34 @@ impl Olympus {
     impl_property!(panorama_mode, Panorama_mode, u16);
     impl_property!(panorama_frame_num, Panorama_frameNum, u16);
 }
+
+impl_serialize!(
+    Olympus,
+    [
+        camera_type2,
+        valid_bits,
+        sensor_calibration,
+        drive_mode,
+        color_space,
+        focus_mode,
+        auto_focus,
+        af_point,
+        // af_areas,
+        af_point_selected,
+        af_result,
+        af_fine_tune,
+        af_fine_tune_adj,
+        special_mode,
+        zoom_step_count,
+        focus_step_count,
+        focus_step_infinity,
+        focus_step_near,
+        focus_distance,
+        aspect_frame,
+        stacked_image,
+        is_live_nd,
+        live_nd_factor,
+        panorama_mode,
+        panorama_frame_num
+    ]
+);

@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Hasselblad {
     inner: libraw_sys::libraw_hasselblad_makernotes_t,
@@ -29,3 +29,24 @@ impl Hasselblad {
     impl_property!(recommended_crop, RecommendedCrop, [i32; 2]);
     impl_property!(mn_color_matrix, mnColorMatrix, [[f64; 3]; 4]);
 }
+
+impl_serialize!(
+    Hasselblad,
+    [
+        base_iso,
+        gain,
+        sensor,
+        // sensor_unit,
+        // host_body,
+        sensor_code,
+        sensor_sub_code,
+        coating_code,
+        uncropped,
+        capture_sequence_initiator,
+        // sensor_unit_connector,
+        format,
+        n_ifd_cm,
+        recommended_crop,
+        mn_color_matrix
+    ]
+);

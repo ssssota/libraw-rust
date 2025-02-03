@@ -1,4 +1,5 @@
 #[derive(Debug, PartialEq)]
+#[cfg_attr(feature = "serialize", derive(serde::Serialize))]
 pub enum FocalType {
     Undefined,
     Unknown(i16),

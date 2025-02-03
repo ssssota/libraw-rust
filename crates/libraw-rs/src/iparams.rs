@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct IParams {
     inner: libraw_sys::libraw_iparams_t,
@@ -40,3 +40,24 @@ impl IParams {
         }
     }
 }
+
+impl_serialize!(
+    IParams,
+    [
+        make,
+        model,
+        software,
+        normalized_make,
+        normalized_model,
+        maker_index,
+        raw_count,
+        dng_version,
+        colors,
+        filters,
+        xtrans,
+        xtrans_abs,
+        cdesc,
+        xmplen,
+        is_foveon
+    ]
+);

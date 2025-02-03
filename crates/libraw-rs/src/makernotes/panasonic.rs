@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Panasonic {
     inner: libraw_sys::libraw_panasonic_makernotes_t,
@@ -20,3 +20,19 @@ impl Panasonic {
     impl_property!(zoom_position, ZoomPosition, u32);
     impl_property!(lens_manufacturer, LensManufacturer, u32);
 }
+
+impl_serialize!(
+    Panasonic,
+    [
+        compression,
+        black_level_dim,
+        black_level,
+        multishot,
+        gamma,
+        high_iso_multiplier,
+        focus_step_near,
+        focus_step_count,
+        zoom_position,
+        lens_manufacturer
+    ]
+);

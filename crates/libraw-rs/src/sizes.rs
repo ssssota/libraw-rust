@@ -4,6 +4,7 @@ pub struct Sizes {
     inner: libraw_sys::libraw_image_sizes_t,
 }
 
+#[cfg_attr(feature = "serialize", derive(serde::Serialize))]
 pub enum Rotation {
     Zero,
     OneEighty,

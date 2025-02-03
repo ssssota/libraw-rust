@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct ImgOther {
     inner: libraw_sys::libraw_imgother_t,
@@ -21,3 +21,20 @@ impl ImgOther {
     impl_property!(artist, Option<String>);
     impl_property!(analogbalance, [f32; 4usize]);
 }
+
+impl_serialize!(
+    ImgOther,
+    [
+        iso_speed,
+        shutter,
+        aperture,
+        focal_len,
+        timestamp,
+        shot_order,
+        gpsdata,
+        // parsed_gps,
+        desc,
+        artist,
+        analogbalance
+    ]
+);

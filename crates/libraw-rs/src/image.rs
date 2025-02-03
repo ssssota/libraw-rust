@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct ProcessedImage {
     inner: libraw_sys::libraw_processed_image_t,
@@ -33,6 +33,9 @@ impl ProcessedImage {
     }
 }
 
+impl_serialize!(ProcessedImage, [r#type, height, width, colors, bits]);
+
+#[cfg_attr(feature = "serialize", derive(serde::Serialize))]
 pub enum ImageFormat {
     JPEG = libraw_sys::LibRaw_image_formats_LIBRAW_IMAGE_JPEG as isize,
     BITMAP = libraw_sys::LibRaw_image_formats_LIBRAW_IMAGE_BITMAP as isize,

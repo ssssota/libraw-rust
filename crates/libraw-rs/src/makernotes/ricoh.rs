@@ -1,4 +1,4 @@
-use crate::impl_property;
+use crate::{impl_property, impl_serialize};
 
 pub struct Ricoh {
     inner: libraw_sys::libraw_ricoh_makernotes_t,
@@ -26,3 +26,25 @@ impl Ricoh {
     impl_property!(flash_exposure_comp, FlashExposureComp, f64);
     impl_property!(manual_flash_output, ManualFlashOutput, f64);
 }
+
+impl_serialize!(
+    Ricoh,
+    [
+        af_status,
+        af_area_x_position,
+        af_area_y_position,
+        af_area_mode,
+        sensor_width,
+        sensor_height,
+        cropped_image_width,
+        cropped_image_height,
+        wide_adapter,
+        crop_mode,
+        nd_filter,
+        auto_bracketing,
+        macro_mode,
+        flash_mode,
+        flash_exposure_comp,
+        manual_flash_output
+    ]
+);
