@@ -48,7 +48,6 @@ fn bindings(out_dir: &Path) {
         .header("LibRaw/libraw/libraw.h")
         .clang_arg("-fvisibility=default")
         .use_core()
-        .ctypes_prefix("libc")
         .generate_comments(true)
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         // API improvements
