@@ -23,11 +23,6 @@ pub struct LibRaw {
 #[wasm_bindgen]
 impl LibRaw {
     #[wasm_bindgen]
-    pub fn unpack(&self) -> Result<(), String> {
-        self.internal.unpack().map_err(|e| e.to_string())
-    }
-
-    #[wasm_bindgen]
     pub fn idata(&self) -> JsValue {
         serde_wasm_bindgen::to_value(&self.internal.idata()).unwrap()
     }

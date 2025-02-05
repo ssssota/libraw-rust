@@ -16,6 +16,7 @@ fn build(out_dir: &Path) {
 
     if env::var("CARGO_CFG_TARGET_FAMILY").unwrap() == "wasm" {
         libraw.cpp_link_stdlib(None);
+        libraw.flag_if_supported("-DLIBRAW_NOTHREADS");
     }
 
     for source_file in list_libraw_cpp_files() {
