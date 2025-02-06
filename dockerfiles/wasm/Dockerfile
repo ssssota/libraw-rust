@@ -11,6 +11,6 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
 
 COPY ./Cargo.toml ./Cargo.lock /app/
 
-ENV CC=/app/emcc.sh \
-    CXX=/app/em++.sh \
-    BINDGEN_EXTRA_CLANG_ARGS="--sysroot=/emsdk/upstream/emscripten/cache/sysroot"
+ENV CXX=/app/additional/em++.sh \
+    BINDGEN_EXTRA_CLANG_ARGS="--sysroot=/emsdk/upstream/emscripten/cache/sysroot" \
+    ADDITIONAL_SOURCE_FILES="/app/additional/extra.c"

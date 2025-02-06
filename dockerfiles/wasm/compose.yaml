@@ -14,10 +14,7 @@ services:
         source: ../../npm
         target: /app/npm
       - type: bind
-        source: ./emcc.sh
-        target: /app/emcc.sh
-      - type: bind
-        source: ./em++.sh
-        target: /app/em++.sh
+        source: ./additional
+        target: /app/additional
     working_dir: /app
     command: ["wasm-pack", "build", "npm", "--target=web"]

@@ -23,6 +23,13 @@ fn build(out_dir: &Path) {
         libraw.file(format!("LibRaw/{source_file}"));
     }
 
+    let additional_files = env::var("ADDITIONAL_SOURCE_FILES")
+        .map(|s| s.split(":").map(|s| s.to_string()).collect::<Vec<String>>())
+        .unwrap_or(vec![]);
+    for source_file in additional_files {
+        libraw.file(source_file);
+    }
+
     libraw.warnings(false);
     libraw.extra_warnings(false);
     // do I really have to supress all of these?
