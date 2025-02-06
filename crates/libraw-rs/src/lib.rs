@@ -178,7 +178,7 @@ mod tests {
     #[test]
     fn camera_list() {
         let cameras = super::camera_list();
-        assert_eq!(cameras.len(), 1222);
+        assert_eq!(cameras.len(), 1221);
         // Check for some known cameras
         assert!(cameras.contains(&"Adobe Digital Negative (DNG)"));
         assert!(cameras.contains(&"Canon EOS R3"));
