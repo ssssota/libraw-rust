@@ -1,0 +1,17 @@
+services:
+  build:
+    build:
+      context: ../..
+      dockerfile: ./dockerfiles/wasi/Dockerfile
+    volumes:
+      - type: bind
+        source: ../../target
+        target: /app/target
+      - type: bind
+        source: ../../crates
+        target: /app/crates
+      - type: bind
+        source: ./.cargo
+        target: /app/.cargo
+    working_dir: /app
+    command: ["cargo", "build", "--release", "--target=wasm32-wasip1"]

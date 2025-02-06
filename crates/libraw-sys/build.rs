@@ -1,6 +1,8 @@
 use std::env;
 use std::path::Path;
 
+use bindgen::Builder;
+
 fn main() {
     let out_dir = env::var_os("OUT_DIR").unwrap();
     let out_dir = Path::new(&out_dir);
@@ -13,6 +15,13 @@ fn build(out_dir: &Path) {
     let mut libraw = cc::Build::new();
     libraw.cpp(true);
     libraw.include("LibRaw/");
+
+    // wasi
+    if env::var("CARGO_CFG_TARGET_OS").map_or(false, |os| os == "wasi") {
+        libraw.no_default_flags(true);
+        libraw.flag("-mllvm");
+        libraw.flag("-wasm-enable-sjlj");
+    }
 
     for source_file in list_libraw_cpp_files() {
         libraw.file(format!("LibRaw/{source_file}"));
@@ -44,7 +53,14 @@ fn build(out_dir: &Path) {
 }
 
 fn bindings(out_dir: &Path) {
-    let builder = bindgen::Builder::default()
+    let ctypes_prefix = env::var("CARGO_CFG_TARGET_OS").map_or(None, |os| {
+        if os == "wasm" {
+            Some("libc")
+        } else {
+            None
+        }
+    });
+    let builder = binding_builder(ctypes_prefix)
         .header("LibRaw/libraw/libraw.h")
         .clang_arg("-fvisibility=default")
         .use_core()
@@ -150,6 +166,14 @@ fn bindings(out_dir: &Path) {
         .expect("Unable to generate bindings")
         .write_to_file(out_dir.join("bindings.rs"))
         .expect("Couldn't write bindings!");
+}
+
+fn binding_builder(ctypes_prefix: Option<&str>) -> Builder {
+    if let Some(ctypes_prefix) = ctypes_prefix {
+        bindgen::builder().ctypes_prefix(ctypes_prefix)
+    } else {
+        bindgen::builder()
+    }
 }
 
 fn list_libraw_cpp_files() -> Vec<String> {
