@@ -14,7 +14,7 @@ services:
         source: ../../npm
         target: /app/npm
       - type: bind
-        source: ./.cargo
+        source: ../../.cargo
         target: /app/.cargo
     working_dir: /app
     environment:

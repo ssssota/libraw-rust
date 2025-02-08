@@ -15,4 +15,4 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-exec /opt/wasi-sdk/bin/wasm-ld "${new_args[@]}"
+exec rust-lld "${new_args[@]}"

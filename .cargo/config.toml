@@ -1,0 +1,2 @@
+[target.wasm32-wasip1-threads]
+linker = "/app/.cargo/skip-libcxx-ld.sh"
