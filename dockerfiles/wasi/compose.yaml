@@ -11,7 +11,13 @@ services:
         source: ../../crates
         target: /app/crates
       - type: bind
+        source: ../../npm
+        target: /app/npm
+      - type: bind
         source: ./.cargo
         target: /app/.cargo
     working_dir: /app
-    command: ["cargo", "build", "--release", "--target=wasm32-wasip1"]
+    environment:
+      - EMNAPI_LINK_DIR=/app/npm/node_modules/emnapi/lib/wasm32-wasip1-threads
+    command: ["pnpm", "napi", "build", "--release", "--cwd", "./npm", "--package", "libraw-rs-wasm", "--target", "wasm32-wasip1-threads", "--platform"]
+    # command: ["pnpm", "napi", "build", "--help"]
