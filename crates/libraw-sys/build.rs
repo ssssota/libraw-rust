@@ -14,6 +14,13 @@ fn build(out_dir: &Path) {
     libraw.cpp(true);
     libraw.include("LibRaw/");
 
+    // wasi
+    if env::var("CARGO_CFG_TARGET_OS").is_ok_and(|os| os == "wasi") {
+        libraw.no_default_flags(true);
+        libraw.flag("-mllvm");
+        libraw.flag("-wasm-enable-sjlj");
+    }
+
     for source_file in list_libraw_cpp_files() {
         libraw.file(format!("LibRaw/{source_file}"));
     }
@@ -44,7 +51,7 @@ fn build(out_dir: &Path) {
 }
 
 fn bindings(out_dir: &Path) {
-    let builder = bindgen::Builder::default()
+    let builder = bindgen::builder()
         .header("LibRaw/libraw/libraw.h")
         .clang_arg("-fvisibility=default")
         .use_core()

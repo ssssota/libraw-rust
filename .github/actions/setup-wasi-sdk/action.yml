@@ -1,0 +1,39 @@
+name: Setup WASI SDK
+
+inputs:
+  wasi-version:
+    description: WASI SDK version
+    default: '25'
+  wasi-version-full:
+    description: Full WASI SDK version
+  os:
+    description: Operating system (linux, macos, windows)
+    default: linux
+  arch:
+    description: Architecture (x86_64, aarch64)
+    default: x86_64
+
+runs:
+  using: 'composite'
+  steps:
+    - run: |
+        mkdir -p $HOME/wasi-sdk
+        cd $HOME/wasi-sdk
+        DIRNAME=wasi-sdk-${WASI_VERSION_FULL}-${WASI_ARCH}-${WASI_OS}
+        wget https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-${WASI_VERSION}/${DIRNAME}.tar.gz
+        tar xvf ${DIRNAME}.tar.gz
+        rm ${DIRNAME}.tar.gz
+        WASI_SDK_PATH=$HOME/wasi-sdk/${DIRNAME}
+        echo "WASI_SDK_PATH=$WASI_SDK_PATH" >> $GITHUB_ENV
+        echo "PATH=$WASI_SDK_PATH/bin:$PATH" >> $GITHUB_ENV
+        echo "CC=$WASI_SDK_PATH/bin/clang" >> $GITHUB_ENV
+        echo "CXX=$WASI_SDK_PATH/bin/clang++" >> $GITHUB_ENV
+        echo "LD=$WASI_SDK_PATH/bin/wasm-ld" >> $GITHUB_ENV
+        echo "AR=$WASI_SDK_PATH/bin/llvm-ar" >> $GITHUB_ENV
+        echo "RANLIB=$WASI_SDK_PATH/bin/llvm-ranlib" >> $GITHUB_ENV
+      shell: bash
+      env:
+        WASI_VERSION: ${{ inputs.wasi-version }}
+        WASI_VERSION_FULL: ${{ inputs.wasi-version-full || format('{0}.0', inputs.wasi-version) }}
+        WASI_OS: ${{ inputs.os }}
+        WASI_ARCH: ${{ inputs.arch }}
