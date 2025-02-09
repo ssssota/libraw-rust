@@ -37,3 +37,16 @@ jobs:
       - run: echo "BINDGEN_EXTRA_CLANG_ARGS=--sysroot=$(dirname $(which emcc))/cache/sysroot" >> $GITHUB_ENV
       - run: rustup target add wasm32-unknown-unknown
       - run: cargo build --target wasm32-unknown-unknown
+
+  build-wasi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: ./.github/actions/setup-wasi-sdk
+      - uses: ./.github/actions/setup
+      - run: pnpm napi build --release --cwd ./npm --package libraw-rs-wasm --target wasm32-wasip1-threads --platform
+        env:
+          EMNAPI_LINK_DIR: ./npm/node_modules/emnapi/lib/wasm32-wasip1-threads
