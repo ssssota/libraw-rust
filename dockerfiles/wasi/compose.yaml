@@ -17,4 +17,6 @@ services:
         source: ../../.cargo
         target: /app/.cargo
     working_dir: /app
-    command: ["pnpm", "napi", "build", "--release", "--cwd", "./npm", "--package", "libraw-rs-wasm", "--target", "wasm32-wasip1-threads", "--platform"]
+    command: ["pnpm", "napi", "build", "--release", "-o", "dist", "--cwd", "./npm", "--package", "libraw-rs-wasm", "--target", "wasm32-wasip1-threads", "--platform"]
+    environment:
+      - RUSTFLAGS=-L/opt/wasi-sdk/share/wasi-sysroot/lib/wasm32-wasip1-threads
