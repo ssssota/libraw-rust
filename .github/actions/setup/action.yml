@@ -12,11 +12,10 @@ runs:
     - uses: dtolnay/rust-toolchain@stable
       with:
         compnents: rustfmt, clippy
-    - run: npm i -g -f corepack@0.31.0 && corepack enable
-      shell: bash
+    - uses: pnpm/action-setup@v4
     - uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'pnpm'
-    - run: corepack enable && pnpm install
+    - run: pnpm install
       shell: bash
