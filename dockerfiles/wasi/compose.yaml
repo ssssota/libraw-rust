@@ -17,7 +17,4 @@ services:
         source: ../../.cargo
         target: /app/.cargo
     working_dir: /app
-    environment:
-      - EMNAPI_LINK_DIR=/app/npm/node_modules/emnapi/lib/wasm32-wasip1-threads
     command: ["pnpm", "napi", "build", "--release", "--cwd", "./npm", "--package", "libraw-rs-wasm", "--target", "wasm32-wasip1-threads", "--platform"]
-    # command: ["pnpm", "napi", "build", "--help"]
