@@ -47,6 +47,7 @@ jobs:
           submodules: recursive
       - uses: ./.github/actions/setup-wasi-sdk
       - uses: ./.github/actions/setup
+      - run: rustup target add wasm32-wasip1-threads
       - run: pnpm napi build --release --cwd ./npm --package libraw-rs-wasm --target wasm32-wasip1-threads --platform
         env:
           EMNAPI_LINK_DIR: ./npm/node_modules/emnapi/lib/wasm32-wasip1-threads
