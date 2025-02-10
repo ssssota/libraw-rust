@@ -14,8 +14,20 @@ fn build(out_dir: &Path) {
     libraw.cpp(true);
     libraw.include("LibRaw/");
 
+    if env::var("CARGO_CFG_TARGET_FAMILY").unwrap() == "wasm" {
+        libraw.cpp_link_stdlib(None);
+        libraw.flag_if_supported("-DLIBRAW_NOTHREADS");
+    }
+
     for source_file in list_libraw_cpp_files() {
         libraw.file(format!("LibRaw/{source_file}"));
+    }
+
+    let additional_files = env::var("ADDITIONAL_SOURCE_FILES")
+        .map(|s| s.split(":").map(|s| s.to_string()).collect::<Vec<String>>())
+        .unwrap_or(vec![]);
+    for source_file in additional_files {
+        libraw.file(source_file);
     }
 
     libraw.warnings(false);
